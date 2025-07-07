@@ -16,12 +16,13 @@
   <h1>Gestion des types de prêt</h1>
 
   <div>
-    <input type="hidden" id="id">
-    <input type="text" id="nom" placeholder="Nom">
-    <input type="number" id="taux" placeholder="Taux" step="0.01">
-    <input type="number" id="duree" placeholder="Durée">
-    <button onclick="ajouterOuModifier()">Ajouter / Modifier</button>
-  </div>
+  <input type="hidden" id="id">
+  <input type="text" id="nom" placeholder="Nom">
+  <input type="number" id="taux" placeholder="Taux" step="0.01">
+  <input type="hidden" id="duree" value="1">
+  <button onclick="ajouterOuModifier()">Ajouter / Modifier</button>
+</div>
+
 
   <table id="table-TypePret">
     <thead>
