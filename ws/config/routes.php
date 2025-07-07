@@ -8,5 +8,4 @@ Flight::route('POST /etudiants', ['EtudiantController', 'create']);
 Flight::route('PUT /etudiants/@id', ['EtudiantController', 'update']);
 Flight::route('DELETE /etudiants/@id', ['EtudiantController', 'delete']);
 
-// Route Hello
 Flight::route('GET /hello', ['HelloController', 'afficher']);

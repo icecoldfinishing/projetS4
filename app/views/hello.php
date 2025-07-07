@@ -1,4 +1,3 @@
-<!-- hello.html -->
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -7,6 +6,6 @@
 </head>
 <body>
   <h1>Bonjour depuis la page Hello 🎉</h1>
-  <a href="index.html">⬅️ Retour à l'accueil</a>
+  <a href="..\index.html">⬅️ Retour à l'accueil</a>
 </body>
 </html>
