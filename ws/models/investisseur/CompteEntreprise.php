@@ -7,15 +7,20 @@ class CompteEntreprise {
     }
 
     public function ajouterFonds($montant) {
-        $sql = "INSERT INTO compteEntreprise (valeur) VALUES (:valeur)";
-        $stmt = $this->db->prepare($sql);
-        $stmt->bindParam(':valeur', $montant, PDO::PARAM_INT);
-        return $stmt->execute();
+        // Try to update an existing record
+        $stmt = $this->db->prepare("UPDATE compteentreprise SET valeur = valeur + ?");
+        $stmt->execute([$montant]);
+
+        // If no row was updated (meaning no record existed), insert a new one
+        if ($stmt->rowCount() === 0) {
+            $stmt = $this->db->prepare("INSERT INTO compteentreprise (valeur) VALUES (?)");
+            return $stmt->execute([$montant]);
+        }
+        return true; // Return true if update was successful
     }
 
-    public static function updateSolde($montant) {
-        $db = getDB();
-        $stmt = $db->prepare("UPDATE compteentreprise SET valeur = valeur - ?");
-        $stmt->execute([$montant]);
+    public function updateSolde($montant) {
+        $stmt = $this->db->prepare("UPDATE compteEntreprise SET valeur = valeur - ?");
+        return $stmt->execute([$montant]);
     }
 }

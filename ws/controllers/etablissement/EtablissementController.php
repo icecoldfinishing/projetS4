@@ -26,7 +26,8 @@ class EtablissementController {
 
         if ($action === 'valider') {
             $pret = Pret::getById($id);
-            CompteEntreprise::updateSolde($pret['valeur']);
+            $compteEntreprise = new CompteEntreprise(getDB());
+            $compteEntreprise->updateSolde($pret['valeur']);
             Pret::updateStatut($id, 2);  // statut 2 = accepté
         } elseif ($action === 'refuser') {
             Pret::updateStatut($id, 3);  // statut 3 = refusé
