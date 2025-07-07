@@ -21,7 +21,7 @@ $user = isset($_SESSION['user']) ? $_SESSION['user'] : null;
     <?php exit(); // Bloque l'accès si pas connecté ?>
   <?php endif; ?>
 
-  <form method="post" action="<?= BASE_URL ?>/pret/create">
+  <form method="post" action="<?= BASE_URL ?>/pret/demande">
 
     <div>
       <label for="valeur">Montant du prêt</label>

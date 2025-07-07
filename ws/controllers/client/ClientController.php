@@ -2,6 +2,7 @@
 require_once __DIR__ . '/../../models/other/User.php';
 require_once __DIR__ . '/../../models/other/Role.php';
 require_once __DIR__ . '/../../models/etablissement/TypePret.php';
+require_once __DIR__ . '/../../models/pret/DemandePret.php';
 
 class ClientController
 {
@@ -35,10 +36,34 @@ class ClientController
             'pwd'     => Flight::request()->data->pwd
         ];
 
-        // Appelle la méthode de création
         User::create($data);
 
-        // Redirige vers la page d’accueil ou une page de confirmation
         Flight::redirect('/login');
     }
+    public static function storeDemande()
+    {
+        session_start();
+
+        if (!isset($_SESSION['user'])) {
+            Flight::redirect('/login');
+            return;
+        }
+
+        $data = (object)[
+            'id_user'     => $_SESSION['user']['id'],
+            'id_statut'   => 1, 
+            'valeur'      => Flight::request()->data->valeur,
+            'dateDebut'   => Flight::request()->data->dateDebut,
+            'duree'       => Flight::request()->data->duree,
+            'id_typePret' => Flight::request()->data->id_typePret,
+            'commentaire' => Flight::request()->data->commentaire ?? null
+        ];
+
+        DemandePret::create($data);
+
+        Flight::redirect('/client');
+    }
+
+
+
 }
