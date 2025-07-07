@@ -38,7 +38,18 @@ Flight::route('GET /etablissement', ['EtablissementController', 'afficher']);
 
 //Investisseur
 Flight::route('GET /investisseur', ['InvestisseurController', 'afficher']);
+Flight::route('GET|POST /investisseur/AjoutFonds', ['InvestisseurController', 'showAjoutFondsPage']);
 
 // Login
 Flight::route('GET /login', ['LoginController', 'afficher']);
 Flight::route('POST /login', ['LoginController', 'connecter']);
+
+Flight::route('POST /ajouter-fonds', function(){
+    require_once __DIR__ . '/../controllers/investisseur/CompteEntrepriseController.php';
+
+    $data = Flight::request()->data;
+    $montant = intval($data['valeur']);
+    $result = CompteEntrepriseController::ajouter($montant);
+
+    Flight::json(['success' => $result]);
+});

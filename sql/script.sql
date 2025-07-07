@@ -80,13 +80,7 @@ CREATE TABLE remboursement (
 
 CREATE TABLE compteEntreprise (
     id INT PRIMARY KEY AUTO_INCREMENT,
-    id_pret INT,
-    id_investissement INT,
-    id_remboursement INT,
-    valeur INT NOT NULL,
-    FOREIGN KEY (id_pret) REFERENCES pret(id),
-    FOREIGN KEY (id_investissement) REFERENCES investissement(id),
-    FOREIGN KEY (id_remboursement) REFERENCES remboursement(id)
+    valeur INT NOT NULL
 );
 
 CREATE TABLE fondsEtablissement (
