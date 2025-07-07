@@ -65,6 +65,7 @@ CREATE TABLE remboursement (
     FOREIGN KEY (id_pret) REFERENCES pret(id)
 );
 
+DROP TABLE IF EXISTS compteEntreprise;
 CREATE TABLE compteEntreprise (
     id INT PRIMARY KEY AUTO_INCREMENT,
     valeur INT NOT NULL
