@@ -40,6 +40,21 @@ CREATE TABLE typePret (
     duree INT NOT NULL
 );
 
+CREATE TABLE demandePret (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    id_user INT NOT NULL,
+    id_statut INT NOT NULL,
+    valeur INT NOT NULL,
+    dateDebut DATE NOT NULL,
+    duree INT NOT NULL,
+    id_typePret INT NOT NULL,
+    commentaire TEXT,
+
+    FOREIGN KEY (id_user) REFERENCES user(id),
+    FOREIGN KEY (id_statut) REFERENCES statut(id),
+    FOREIGN KEY (id_typePret) REFERENCES typePret(id)
+);
+
 CREATE TABLE pret (
     id INT PRIMARY KEY AUTO_INCREMENT,
     id_user INT,

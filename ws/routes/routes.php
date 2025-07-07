@@ -24,7 +24,6 @@ Flight::route('DELETE /typePrets/@id',     ['TypePretController', 'delete']);
 // --- Front‑end page
 Flight::route('GET /typePretPage',         ['TypePretController', 'showPage']);
 
-
 //  Hello
 Flight::route('GET /hello', ['HelloController', 'afficher']);
 
