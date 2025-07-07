@@ -1,8 +1,6 @@
 <?php
-require_once __DIR__ . '/../../models/other/User.php';
-require_once __DIR__ . '/../../models/other/Role.php';
-require_once __DIR__ . '/../../models/etablissement/TypePret.php';
 require_once __DIR__ . '/../../models/pret/Pret.php';
+require_once __DIR__ . '/../../models/other/Role.php';
 
 class ClientController
 {
@@ -24,6 +22,23 @@ class ClientController
         $typesPret = TypePret::getAll();
         include __DIR__ . '/../../views/client/demande.php';
     }
+
+    public static function mesPret()
+    {
+        session_start();
+
+        if (!isset($_SESSION['user'])) {
+            Flight::redirect('/login');
+            return;
+        }
+
+        $id_user = $_SESSION['user']['id'];
+        $prets = Pret::getPretsAccepte($id_user);
+
+        include __DIR__ . '/../../views/client/mesPret.php';
+    }
+
+
 
     // Traite la soumission du formulaire (POST)
     public static function store()

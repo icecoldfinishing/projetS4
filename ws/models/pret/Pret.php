@@ -62,4 +62,25 @@ class Pret {
         $stmt = $db->prepare("DELETE FROM pret WHERE id = ?");
         $stmt->execute([$id]);
     }
+
+    public static function getPretsNonStatut() {
+        $db = getDB();
+        $stmt = $db->prepare("SELECT * FROM pret WHERE id_statut = ?");
+        $stmt->execute([1]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+    public static function getPretsAccepte($id_user) {
+        $db = getDB();
+        $stmt = $db->prepare("SELECT * FROM pret WHERE id_statut = ? AND id_user = ?");
+        $stmt->execute([2, $id_user]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+
+    public static function updateStatut($id, $nouveauStatut) {
+        $db = getDB();
+        $stmt = $db->prepare("UPDATE pret SET id_statut = ? WHERE id = ?");
+        $stmt->execute([$nouveauStatut, $id]);
+    }
+
 }
