@@ -91,3 +91,11 @@ CREATE TABLE annuite (
     valeurNette DECIMAL(10,2) NOT NULL,
     FOREIGN KEY (id_pret) REFERENCES pret(id)
 );
+
+CREATE TABLE assurance (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    id_pret INT,
+    montant DECIMAL(10,2) NOT NULL,
+    dateSouscription DATE NOT NULL,
+    FOREIGN KEY (id_pret) REFERENCES pret(id)
+);
