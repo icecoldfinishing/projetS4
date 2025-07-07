@@ -1,6 +1,5 @@
 <?php
 
-// Routes Étudiant
 Flight::route('GET /etudiants', ['EtudiantController', 'getAll']);
 Flight::route('GET /etudiants/@id', ['EtudiantController', 'getOne']);
 Flight::route('POST /etudiants', ['EtudiantController', 'create']);

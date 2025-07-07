@@ -19,8 +19,6 @@ class EtudiantController {
 
     public static function update($id) {
         $data = Flight::request()->data;
-
-        // fallback si $data est vide à cause d’un PUT mal encodé
         if ((empty($data->nom) || empty($data->email)) && Flight::request()->getBody() !== '') {
             parse_str(Flight::request()->getBody(), $tmp);
             $data = (object) $tmp;
