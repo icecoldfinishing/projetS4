@@ -32,6 +32,7 @@ Flight::route('GET /hello', ['HelloController', 'afficher']);
 Flight::route('GET /client', ['ClientController', 'afficher']);
 Flight::route('GET /demande', ['ClientController', 'demande']);
 Flight::route('POST /client/create', ['ClientController', 'store']);
+Flight::route('GET /client/create', ['ClientController', 'create']);
 Flight::route('POST /pret/demande', ['ClientController', 'storePret']);
 Flight::route('GET /mesPret', ['ClientController', 'mesPret']);
 Flight::route('POST /pret/export-pdf', ['PdfController', 'exportPretPdf']);
