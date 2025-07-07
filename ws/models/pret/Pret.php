@@ -1,27 +1,28 @@
 <?php
 require_once __DIR__ . '/../../../ws/db.php';
 
-class DemandePret {
+class Pret {
 
+    // Récupère tous les prêts
     public static function getAll() {
         $db = getDB();
-        $stmt = $db->query("SELECT * FROM demandePret");
+        $stmt = $db->query("SELECT * FROM pret");
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    // Récupère une demande par son ID
+    // Récupère un prêt par son ID
     public static function getById($id) {
         $db = getDB();
-        $stmt = $db->prepare("SELECT * FROM demandePret WHERE id = ?");
+        $stmt = $db->prepare("SELECT * FROM pret WHERE id = ?");
         $stmt->execute([$id]);
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    // Crée une nouvelle demande de prêt
+    // Crée un nouveau prêt
     public static function create($data) {
         $db = getDB();
         $stmt = $db->prepare("
-            INSERT INTO demandePret (id_user, id_statut, valeur, dateDebut, duree, id_typePret, commentaire)
+            INSERT INTO pret (id_user, id_statut, valeur, dateDebut, duree, id_typePret, commentaire)
             VALUES (?, ?, ?, ?, ?, ?, ?)
         ");
         $stmt->execute([
@@ -35,10 +36,14 @@ class DemandePret {
         ]);
     }
 
-    // Met à jour une demande existante
+    // Met à jour un prêt existant
     public static function update($id, $data) {
         $db = getDB();
-        $stmt = $db->prepare("UPDATE demandePret SET id_user = ?, id_statut = ?, valeur = ?, dateDebut = ?, duree = ?, id_typePret = ?, commentaire = ? WHERE id = ?");
+        $stmt = $db->prepare("
+            UPDATE pret 
+            SET id_user = ?, id_statut = ?, valeur = ?, dateDebut = ?, duree = ?, id_typePret = ?, commentaire = ?
+            WHERE id = ?
+        ");
         $stmt->execute([
             $data->id_user,
             $data->id_statut,
@@ -51,10 +56,10 @@ class DemandePret {
         ]);
     }
 
-    // Supprime une demande
+    // Supprime un prêt
     public static function delete($id) {
         $db = getDB();
-        $stmt = $db->prepare("DELETE FROM demandePret WHERE id = ?");
+        $stmt = $db->prepare("DELETE FROM pret WHERE id = ?");
         $stmt->execute([$id]);
     }
 }
