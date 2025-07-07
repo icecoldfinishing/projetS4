@@ -1,87 +1,43 @@
-🔐 1. Gestion des comptes clients
-Création de comptes (particulier, entreprise)
+🏦 1. Ajout de fonds dans l’Établissement Financier (EF)
+Enregistrement des apports de fonds (investisseurs, capital initial, etc.)
 
-Identification et authentification
+Suivi du solde global disponible pour octroyer des prêts
 
-Mise à jour des informations personnelles
+Historique des mouvements de fonds (entrées et sorties)
 
-Historique des opérations
+Contrôle automatique de la capacité de prêt selon les fonds disponibles
 
-💰 2. Demande de prêt
-Formulaire de demande (montant, durée, type de prêt)
+🧾 2. Création de types de prêts
+Création de différents types de prêts (personnel, immobilier, étudiant, etc.)
 
-Simulation de prêt (mensualités, taux d’intérêt, durée)
+Définition des paramètres pour chaque type :
 
-Vérification d’éligibilité automatique (pré-évaluation du dossier)
+Taux d’intérêt (fixe ou variable)
 
-🧮 3. Évaluation du dossier
-Analyse de la solvabilité (revenus, dettes, historique bancaire)
+Durée maximale
 
-Calcul du score de crédit
+Montant minimal et maximal
 
-Justificatif possible : fiche de paie (non obligatoire)
+Gestion dynamique des taux (modification possible selon les périodes ou profils)
 
-Décision sur la demande (validation ou refus, manuel ou automatisé)
+Activation/désactivation de types de prêts
 
-Notification du client
+👥 3. Gestion des prêts pour les clients
+Demande de prêt via formulaire (montant, type de prêt, durée)
 
-✅ 4. Validation et signature
-Génération automatique du contrat de prêt
+Simulation de prêt (calcul des mensualités, intérêts, coût total)
 
-Signature électronique sécurisée (optionnelle)
+Évaluation du dossier client (solvabilité(argent compte,revenue))
 
-Enregistrement légal du contrat (optionnel)
+Validation manuelle ou automatique du prêt
 
-💳 5. Décaissement du prêt
-Transfert automatique des fonds sur le compte du client
+Génération du contrat de prêt, avec option de signature électronique
 
-Notification de décaissement
+Décaissement automatisé des fonds si validé
 
-Mise à jour du solde client
+Suivi des remboursements (échéancier, notifications, paiements)
 
-📅 6. Suivi des remboursements
-Génération de l’échéancier (dates, montants, intérêts)
+Gestion des retards (alertes, pénalités, rééchelonnement possible)
 
-Notifications de rappel avant paiement (2–3 jours, personnalisable)
 
-Paiement automatique ou manuel
-
-Affichage en temps réel du solde restant dû
-
-⚠️ 7. Gestion des impayés
-Alerte en cas de retard de paiement
-
-Alerte en cas de fonds insuffisants
-
-Application de pénalités de retard
-
-Mise en relation avec un conseiller
-
-Possibilité de plan de rééchelonnement (optionnel)
-
-📊 8. Statistiques et reporting
-Suivi global des prêts :
-
-prêts accordés, en cours, remboursés
-
-Statistiques par type, région, client
-
-Tableau de bord interactif pour les agents bancaires
-
-🔒 9. Sécurité & conformité (optionnel)
-Authentification forte (2FA)
-
-Journalisation des actions (audit log)
-
-Conformité réglementaire :
-
-KYC (Know Your Customer), AML (Anti-Money Laundering)
-
-🏦 10. Gestion des fonds de l’établissement
-Suivi des fonds disponibles pour le prêt
-
-Planification de la liquidité
-
-Historique des mouvements internes (entrées/sorties)
-
-Prévisions financières pour soutenir les demandes de prêt
+Gestion des utilisateurs : rôles (client, agent, admin)
