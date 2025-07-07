@@ -1,5 +1,3 @@
-
-
 DROP DATABASE IF EXISTS tp_flight;
 CREATE DATABASE tp_flight CHARACTER SET utf8mb4;
 USE tp_flight;
