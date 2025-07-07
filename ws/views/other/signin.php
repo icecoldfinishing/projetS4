@@ -15,6 +15,11 @@ require_once __DIR__ . '/../../../ws/config/config.php';
     <form class="form" action="<?= BASE_URL ?>/client/create" method="post">
         <h2 class="title">Créer un compte</h2>
 
+        <?php if (isset($success) && $success == 1): ?>
+            <div style="background-color: #d4edda; color: #155724; padding: 10px; border-radius: 5px; margin-bottom: 15px; text-align: center;">
+                ✅ Utilisateur créé avec succès !
+            </div>
+        <?php endif; ?>
         <!-- Rôle -->
         <div class="flex-column">
             <label for="id_role">Rôle</label>
@@ -64,7 +69,7 @@ require_once __DIR__ . '/../../../ws/config/config.php';
         </div>
 
         <button type="submit" class="button-submit">Créer le compte</button>
-
+                    
         <p class="p">
             <a href="<?= BASE_URL ?>/login">Déjà inscrit ? <span class="span">Se connecter</span></a>
         </p>

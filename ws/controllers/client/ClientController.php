@@ -43,7 +43,6 @@ class ClientController
     // Traite la soumission du formulaire (POST)
     public static function store()
     {
-        // Récupère les données envoyées en POST
         $data = (object)[
             'id_role' => Flight::request()->data->id_role,
             'nom'     => Flight::request()->data->nom,
@@ -53,8 +52,10 @@ class ClientController
 
         User::create($data);
 
-        Flight::redirect('/login');
+        // Redirection avec un indicateur dans l'URL
+        Flight::redirect('/client/create?success=1');
     }
+
     
     public static function storePret()
     {
