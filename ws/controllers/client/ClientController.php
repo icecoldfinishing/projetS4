@@ -1,6 +1,7 @@
 <?php
 require_once __DIR__ . '/../../models/other/User.php';
 require_once __DIR__ . '/../../models/other/Role.php';
+require_once __DIR__ . '/../../models/pret/TypePret.php';
 
 class ClientController
 {
@@ -15,6 +16,12 @@ class ClientController
     {
         $roles = Role::getAll(); // Récupère tous les rôles pour le formulaire
         include __DIR__ . '/../../views/other/signin.php';
+    }
+    public static function demande()
+    {
+        $roles = Role::getAll();
+        $typesPret = TypePret::getAll();
+        include __DIR__ . '/../../views/client/demande.php';
     }
 
     // Traite la soumission du formulaire (POST)
