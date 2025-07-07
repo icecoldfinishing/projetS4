@@ -50,6 +50,7 @@ Flight::route('POST /investisseur/AjoutFonds', ['InvestisseurController', 'proce
 
 // Login
 Flight::route('GET /login', ['LoginController', 'afficher']);
+Flight::route('GET /logout', ['LoginController', 'afficher']);
 Flight::route('POST /login', ['LoginController', 'connecter']);
 
 

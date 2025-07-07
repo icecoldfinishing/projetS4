@@ -55,6 +55,7 @@ class ClientController
 
         Flight::redirect('/login');
     }
+    
     public static function storePret()
     {
         session_start();
@@ -70,15 +71,19 @@ class ClientController
             'valeur'      => Flight::request()->data->valeur,
             'dateDebut'   => Flight::request()->data->dateDebut,
             'duree'       => Flight::request()->data->duree,
-            'delai'       => Flight::request()->data->delai, // Ajout du champ delai
+            'delai'       => Flight::request()->data->delai,
             'id_typePret' => Flight::request()->data->id_typePret,
             'commentaire' => Flight::request()->data->commentaire ?? null
         ];
 
         Pret::create($data);
 
+        // 🔔 Message flash de succès
+        $_SESSION['success'] = "Votre demande de prêt a bien été enregistrée.";
+
         Flight::redirect('/demande');
     }
+
 
 
 

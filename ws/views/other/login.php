@@ -15,7 +15,7 @@ require_once __DIR__ . '/../../../ws/config/config.php';
     <!-- From Uiverse.io by Smit-Prajapati -->
     <form class="form" action="<?= BASE_URL ?>/login" method="post">
         <div class="flex-column">
-            <label>Role </label>
+            <label>Role (Client ou Investisseur ou Etablissement) </label>
         </div>
         <div class="inputForm">
             <svg height="20" viewBox="0 0 32 32" width="20" xmlns="http://www.w3.org/2000/svg">
