@@ -42,7 +42,7 @@ class TypePretController
     public static function showPage()
     {
         header('Content-Type: text/html; charset=utf-8');
-        readfile(__DIR__ . '/../../views/etablissement/typePret.html');
+        readfile(__DIR__ . '/../../views/etablissement/typePret.php');
     }
 }
 
