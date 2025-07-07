@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__ . '/../../models/other/User.php';
 require_once __DIR__ . '/../../models/other/Role.php';
-require_once __DIR__ . '/../../models/pret/TypePret.php';
+require_once __DIR__ . '/../../models/etablissement/TypePret.php';
 
 class ClientController
 {
