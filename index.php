@@ -1,3 +1,6 @@
+<?php
+require_once __DIR__ . '/ws/config/config.php';
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -12,6 +15,9 @@
   </style>
 </head>
 <body>
+  <p><a href="<?php echo BASE_URL; ?>/etablissement">établissement</a></p>
+  <p><a href="<?php echo BASE_URL; ?>/client">client</a></p>
+  <p><a href="<?php echo BASE_URL; ?>/investisseur">investisseur</a></p>
 
   <h1>Gestion des étudiants</h1>
 
@@ -32,7 +38,6 @@
     </thead>
     <tbody></tbody>
   </table>
-  <a href="ws/hello">👋 Aller à la page Hello</a>
 
 
   <script>
