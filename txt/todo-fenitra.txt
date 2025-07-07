@@ -1,49 +1,5 @@
 🏦 1. Investissements dans l’Établissement Financier (EF)
-Avec proposition, validation, utilisation, et remboursement
-🔹 A. Côté Investisseur
-1. 📥 Proposer un investissement
-Montant à investir
-Taux d’intérêt souhaité
-Durée souhaitée
-Envoi de la proposition à l’EF
-2. 📊 Suivi des investissements
-Liste des propositions :
-En attente de validation
-Acceptées / Refusées / Négociées
-Montant investi validé
-Intérêts attendus
-Date de fin de placement
-3. 💸 Demande de retrait (remboursement)
-Dès que la durée du placement est terminée (ou selon conditions définies) :
-Le bouton "Demander un retrait" est activé
-Le système affiche :
-💰 Montant total à retirer = capital + intérêts
-📅 Délai estimé de traitement
-4. 🧾 Suivi des retraits
-Statut : en attente / validé / refusé / traité
-Date de versement effectif
-Historique de retrait
-🔸 B. Côté Établissement (Admin)
-1. ✅ Validation des propositions d’investissement
-Voir toutes les propositions en attente
-Accepter, refuser, ou renvoyer avec une contre-proposition (taux, durée)
-Une fois validée :
-Le montant rejoint les fonds disponibles de l’EF
-L’investisseur est notifié
-2. 📊 Suivi des fonds par investisseur
-Liste des investissements actifs
-Montant total investi par investisseur
-Taux d’intérêt moyen
-Montant des intérêts dus
-Dates de fin de placement
-3. 💸 Validation des retraits
-Voir les demandes de retrait en attente
-Vérifier si les fonds sont disponibles
-Actions possibles :
-✅ Valider → transfert des fonds à l’investisseur
-❌ Refuser (en cas de fraude, clause non respectée, etc.)
-⏳ Reporter (si fonds indisponibles momentanément)
-Suivi du solde restant et impact sur la capacité de prêt
+Page
 
 
 

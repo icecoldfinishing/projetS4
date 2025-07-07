@@ -1,0 +1,17 @@
+500 Internal Server Error
+require_once(C:\xampp\htdocs\projetS4\ws\controllers\investisseur/../../../db.php): Failed to open stream: No such file or directory (2)
+#0 C:\xampp\htdocs\projetS4\ws\controllers\investisseur\CompteEntrepriseController.php(3): flight\Engine->handleError(2, 'require_once(C:...', 'C:\\xampp\\htdocs...', 3)
+#1 C:\xampp\htdocs\projetS4\ws\controllers\investisseur\CompteEntrepriseController.php(3): require_once()
+#2 C:\xampp\htdocs\projetS4\ws\views\investisseur\AjoutFonds.php(3): require_once('C:\\xampp\\htdocs...')
+#3 C:\xampp\htdocs\projetS4\ws\controllers\investisseur\InvestisseurController.php(8): include('C:\\xampp\\htdocs...')
+#4 C:\xampp\htdocs\projetS4\ws\vendor\mikecao\flight\flight\core\Dispatcher.php(199): InvestisseurController::showAjoutFondsPage()
+#5 C:\xampp\htdocs\projetS4\ws\vendor\mikecao\flight\flight\core\Dispatcher.php(144): flight\core\Dispatcher::invokeMethod(Array, Array)
+#6 C:\xampp\htdocs\projetS4\ws\vendor\mikecao\flight\flight\Engine.php(341): flight\core\Dispatcher::execute(Array, Array)
+#7 C:\xampp\htdocs\projetS4\ws\vendor\mikecao\flight\flight\core\Dispatcher.php(198): flight\Engine->_start()
+#8 C:\xampp\htdocs\projetS4\ws\vendor\mikecao\flight\flight\core\Dispatcher.php(144): flight\core\Dispatcher::invokeMethod(Array, Array)
+#9 C:\xampp\htdocs\projetS4\ws\vendor\mikecao\flight\flight\core\Dispatcher.php(49): flight\core\Dispatcher::execute(Array, Array)
+#10 C:\xampp\htdocs\projetS4\ws\vendor\mikecao\flight\flight\Engine.php(92): flight\core\Dispatcher->run('start', Array)
+#11 C:\xampp\htdocs\projetS4\ws\vendor\mikecao\flight\flight\core\Dispatcher.php(198): flight\Engine->__call('start', Array)
+#12 C:\xampp\htdocs\projetS4\ws\vendor\mikecao\flight\flight\Flight.php(77): flight\core\Dispatcher::invokeMethod(Array, Array)
+#13 C:\xampp\htdocs\projetS4\ws\index.php(6): Flight::__callStatic('start', Array)
+#14 {main}
