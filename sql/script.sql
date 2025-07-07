@@ -1,10 +1,17 @@
 
--- 1. Supprimer et créer la base
+
 DROP DATABASE IF EXISTS tp_flight;
 CREATE DATABASE tp_flight CHARACTER SET utf8mb4;
 USE tp_flight;
 
--- 2. Table des établissements financiers
+CREATE TABLE etudiant (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nom VARCHAR(100),
+    prenom VARCHAR(100),
+    email VARCHAR(100),
+    age INT
+);
+
 CREATE TABLE etablissement_financier (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nom VARCHAR(100) NOT NULL,
@@ -13,7 +20,6 @@ CREATE TABLE etablissement_financier (
     date_creation DATE
 );
 
--- 3. Table des types de prêt
 CREATE TABLE type_pret (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nom VARCHAR(100) NOT NULL,
@@ -21,7 +27,6 @@ CREATE TABLE type_pret (
     duree_max INT NOT NULL COMMENT 'Durée maximale en mois'
 );
 
--- 4. Table des clients
 CREATE TABLE client (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nom VARCHAR(100) NOT NULL,
@@ -33,7 +38,6 @@ CREATE TABLE client (
     date_inscription DATE DEFAULT CURRENT_DATE
 );
 
--- 5. Table des prêts
 CREATE TABLE pret (
     id INT AUTO_INCREMENT PRIMARY KEY,
     client_id INT NOT NULL,
@@ -48,7 +52,6 @@ CREATE TABLE pret (
     FOREIGN KEY (etablissement_id) REFERENCES etablissement_financier(id)
 );
 
--- 6. Table des remboursements
 CREATE TABLE remboursement (
     id INT AUTO_INCREMENT PRIMARY KEY,
     pret_id INT NOT NULL,
