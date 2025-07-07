@@ -41,7 +41,6 @@ Flight::route('POST /pret/export-pdf', ['PdfController', 'exportPretPdf']);
 Flight::route('GET /etablissement', ['EtablissementController', 'afficher']);
 Flight::route('GET /demandePret', ['EtablissementController', 'demandePret']);
 Flight::route('POST /pret/decision', ['EtablissementController', 'decision']);
-Flight::route('POST /stat', ['EtablissementController', 'statInteret']);
 Flight::route('GET /stat', ['EtablissementController', 'view']);
 Flight::route('POST /stat/interets', ['EtablissementController', 'interetsParPeriode']);
 

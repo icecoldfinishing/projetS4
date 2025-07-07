@@ -80,7 +80,8 @@ class EtablissementController {
             } else {
                 $compteEntreprise->updateSolde($pret['valeur']);
                 Pret::updateStatut($id, 2);  
-                Remboursement::generateRemboursements($id);
+                $montant=Remboursement::generateRemboursements($id);
+                $compteEntreprise->ajouterFonds($montant);
                 $_SESSION['success_message'] = 'Prêt validé avec succès.';
             }
         } elseif ($action === 'refuser') {

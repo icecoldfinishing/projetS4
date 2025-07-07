@@ -33,7 +33,7 @@ require_once __DIR__ . '/../../config/config.php';
 
 <table id="tblInterets">
   <thead>
-    <tr><th>Mois/Année</th><th>Intérêt (€)</th></tr>
+    <tr><th>Mois/Année</th><th>Intérêt </th></tr>
   </thead>
   <tbody></tbody>
   <tfoot>

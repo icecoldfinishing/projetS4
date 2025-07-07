@@ -9,9 +9,10 @@ class Remboursement {
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public static function generateRemboursements(int $pretId)
+    public static function generateRemboursements(int $pretId): float
 {
     $db = getDB();
+
     $sql = "
         SELECT p.valeur, p.duree, p.delai, p.dateDebut,
                tp.taux
@@ -22,32 +23,33 @@ class Remboursement {
     $row = $db->prepare($sql);
     $row->execute([$pretId]);
     $p = $row->fetch(PDO::FETCH_ASSOC);
-    if (!$p) throw new RuntimeException("Prêt $pretId introuvable");
-
-    $P = (float)$p['valeur'];                
-    $n = (int)  $p['duree'];                
-    $g = (int)  $p['delai'];                 
-    $r = (float)$p['taux'] / 100 / 12;      
-    $M = round($P * $r / (1 - pow(1 + $r, -$n)), 2);  
-
+    if (!$p) {
+        throw new RuntimeException("Prêt $pretId introuvable");
+    }
+    $P = (float) $p['valeur'];              
+    $n = (int)   $p['duree'];               
+    $g = (int)   $p['delai'];               
+    $r = (float) $p['taux'] / 100 / 12;    
+    $M = round($P * $r / (1 - pow(1 + $r, -$n)), 2);
     $ins = $db->prepare(
         "INSERT INTO remboursement
                (id_pret, mensualite, valeur, dateRemboursement)
          VALUES (?, ?, ?, ?)"
     );
-
     $date = new DateTime($p['dateDebut']);
-    $date->modify("+{$g} months");          
-
-    for ($i = 1; $i <= $n; $i++) {           
+    $date->modify("+{$g} months");         
+    $total = 0.0;                          
+    for ($i = 1; $i <= $n; $i++) {
         $ins->execute([
             $pretId,
-            $i,                              
+            $i,
             $M,
             $date->format('Y-m-d')
         ]);
+        $total += $M;                       
         $date->modify('+1 month');
     }
+    return $total;                          
 }
 
 

@@ -4,7 +4,6 @@ require_once __DIR__ . '/../../db.php';
 
 class StatInteret
 {
-    /* ---- StatInteret.php ---- */
 public static function getByMonth($data)
 {
     $db  = getDB();
