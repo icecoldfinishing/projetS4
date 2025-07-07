@@ -48,12 +48,14 @@ CREATE TABLE pret (
     valeur INT NOT NULL,
     dateDebut DATE NOT NULL,
     duree INT NOT NULL,
+    delai INT,
     id_typePret INT,
     commentaire TEXT,
     FOREIGN KEY (id_user) REFERENCES user(id),
     FOREIGN KEY (id_statut) REFERENCES statut(id),
     FOREIGN KEY (id_typePret) REFERENCES typePret(id)
 );
+
 
 CREATE TABLE remboursement (
     id INT PRIMARY KEY AUTO_INCREMENT,

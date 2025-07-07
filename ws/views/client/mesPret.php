@@ -37,6 +37,7 @@ require_once __DIR__ . '/../../../ws/config/config.php';
           <th>Montant</th>
           <th>Date début</th>
           <th>Durée (mois)</th>
+          <th>Délai mensuel</th>
           <th>Type de prêt</th>
           <th>Commentaire</th>
           <th>Statut</th>
@@ -50,6 +51,7 @@ require_once __DIR__ . '/../../../ws/config/config.php';
             <td><?= htmlspecialchars($pret['valeur']) ?> €</td>
             <td><?= htmlspecialchars($pret['dateDebut']) ?></td>
             <td><?= htmlspecialchars($pret['duree']) ?></td>
+            <td><?= htmlspecialchars($pret['delai']) ?></td>
             <td><?= htmlspecialchars($pret['id_typePret']) ?></td>
             <td><?= nl2br(htmlspecialchars($pret['commentaire'])) ?></td>
             <td><?= htmlspecialchars($pret['id_statut']) ?></td>

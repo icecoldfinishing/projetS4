@@ -70,6 +70,7 @@ class ClientController
             'valeur'      => Flight::request()->data->valeur,
             'dateDebut'   => Flight::request()->data->dateDebut,
             'duree'       => Flight::request()->data->duree,
+            'delai'       => Flight::request()->data->delai, // Ajout du champ delai
             'id_typePret' => Flight::request()->data->id_typePret,
             'commentaire' => Flight::request()->data->commentaire ?? null
         ];

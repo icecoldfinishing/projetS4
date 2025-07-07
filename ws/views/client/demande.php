@@ -42,6 +42,11 @@ $user = isset($_SESSION['user']) ? $_SESSION['user'] : null;
     </div>
 
     <div>
+      <label for="delai">Délai mensuel</label>
+      <input type="number" name="delai" id="delai" placeholder="Délai de carence ou délai de traitement" required>
+    </div>
+
+    <div>
       <label for="id_typePret">Type de prêt</label>
       <select name="id_typePret" id="id_typePret" required>
         <?php foreach ($typesPret as $typePret): ?>
@@ -56,6 +61,7 @@ $user = isset($_SESSION['user']) ? $_SESSION['user'] : null;
 
     <button type="submit">Faire la demande de prêt</button>
   </form>
+
 
 
   <p><a href="<?= BASE_URL ?>/client">Retour à l'accueil</a></p>
