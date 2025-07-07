@@ -46,4 +46,13 @@ class TypePret
         $stmt = $db->prepare("DELETE FROM typePret WHERE id = ?");
         $stmt->execute([$id]);
     }
+    public static function getNomById($id)
+    {
+        $db = getDB();
+        $stmt = $db->prepare("SELECT nom FROM typePret WHERE id = ?");
+        $stmt->execute([$id]);
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $result ? $result['nom'] : null;
+    }
+
 }
