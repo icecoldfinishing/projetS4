@@ -50,7 +50,6 @@ Statistiques personnelles (prêts en cours, remboursés)
 Gestion des prêts clients
 Réception des demandes
 Analyse de solvabilité (revenus, dettes, historique)
-Attribution d’un score de crédit
 Validation ou refus manuel / automatique
 Génération du contrat
 Décaissement
@@ -58,14 +57,9 @@ Transfert des fonds à partir du solde de l’EF
 Mise à jour du solde disponible
 Suivi global des remboursements
 Liste des prêts en cours
-Monitoring des échéances
 Gestion des impayés : alertes, pénalités, notifications
-Rééchelonnement ou intervention d’un conseiller si nécessaire
 Rapports et statistiques
 Nombre de prêts validés, en cours, remboursés
 Taux de défaut
 Répartition par type de prêt, zone géographique, profil client
 Sécurité et conformité (optionnel mais recommandé)
-Authentification 2FA pour agents
-Suivi des actions (journal d’audit)
-Respect des règles KYC/AML
