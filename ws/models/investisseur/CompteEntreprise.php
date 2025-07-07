@@ -6,21 +6,23 @@ class CompteEntreprise {
         $this->db = $pdo;
     }
 
-    public function ajouterFonds($montant) {
-        // Try to update an existing record
-        $stmt = $this->db->prepare("UPDATE compteentreprise SET valeur = valeur + ?");
-        $stmt->execute([$montant]);
+    public function getLastValeur() {
+        $stmt = $this->db->query("SELECT valeur FROM compteentreprise ORDER BY id DESC LIMIT 1");
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $result ? $result['valeur'] : 0;
+    }
 
-        // If no row was updated (meaning no record existed), insert a new one
-        if ($stmt->rowCount() === 0) {
-            $stmt = $this->db->prepare("INSERT INTO compteentreprise (valeur) VALUES (?)");
-            return $stmt->execute([$montant]);
-        }
-        return true; // Return true if update was successful
+    public function ajouterFonds($montant) {
+        $lastValeur = $this->getLastValeur();
+        $newValeur = $lastValeur + $montant;
+        $stmt = $this->db->prepare("INSERT INTO compteentreprise (valeur) VALUES (?)");
+        return $stmt->execute([$newValeur]);
     }
 
     public function updateSolde($montant) {
-        $stmt = $this->db->prepare("UPDATE compteEntreprise SET valeur = valeur - ?");
-        return $stmt->execute([$montant]);
+        $lastValeur = $this->getLastValeur();
+        $newValeur = $lastValeur - $montant;
+        $stmt = $this->db->prepare("INSERT INTO compteentreprise (valeur) VALUES (?)");
+        return $stmt->execute([$newValeur]);
     }
 }
