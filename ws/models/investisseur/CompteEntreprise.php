@@ -12,4 +12,10 @@ class CompteEntreprise {
         $stmt->bindParam(':valeur', $montant, PDO::PARAM_INT);
         return $stmt->execute();
     }
+
+    public static function updateSolde($montant) {
+        $db = getDB();
+        $stmt = $db->prepare("UPDATE compteentreprise SET valeur = valeur - ?");
+        $stmt->execute([$montant]);
+    }
 }

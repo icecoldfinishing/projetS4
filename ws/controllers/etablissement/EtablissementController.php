@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . '/../../models/pret/Pret.php';
+require_once __DIR__ . '/../../models/investisseur/CompteEntreprise.php';
 
 class EtablissementController {
     public static function afficher() {
@@ -24,6 +25,8 @@ class EtablissementController {
         $action = Flight::request()->data->action;
 
         if ($action === 'valider') {
+            $pret = Pret::getById($id);
+            CompteEntreprise::updateSolde($pret['valeur']);
             Pret::updateStatut($id, 2);  // statut 2 = accepté
         } elseif ($action === 'refuser') {
             Pret::updateStatut($id, 3);  // statut 3 = refusé
