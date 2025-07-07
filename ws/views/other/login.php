@@ -49,7 +49,7 @@ require_once __DIR__ . '/../../../ws/config/config.php';
         </div>
         <button class="button-submit">Log In</button>
 
-        <p class="p"><a href="<?php echo BASE_URL; ?>/create">Don't have an account? <span class="span">Sign Up</span>
+        <p class="p"><a href="<?php echo BASE_URL; ?>/client/create">Don't have an account? <span class="span">Sign Up</span>
             </a>
         </p>
         <p class="p line">Or With</p>
