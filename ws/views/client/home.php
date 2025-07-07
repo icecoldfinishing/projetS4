@@ -9,7 +9,6 @@ require_once __DIR__ . '/../../../ws/config/config.php';
 </head>
 <body>
   <h1>Bonjour depuis la page Client</h1>
-  <p><a href="<?php echo BASE_URL; ?>/create">Creation compte user</a></p>
   <p><a href="<?php echo BASE_URL; ?>/hello">Retour à l'accueil</a></p>
 </body>
 </html>
