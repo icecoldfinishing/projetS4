@@ -61,6 +61,7 @@ CREATE TABLE remboursement (
     id INT PRIMARY KEY AUTO_INCREMENT,
     id_investissement INT,
     id_pret INT,
+    mensualite INT,
     valeur INT NOT NULL,
     dateRemboursement DATE NOT NULL,
     FOREIGN KEY (id_investissement) REFERENCES investissement(id),

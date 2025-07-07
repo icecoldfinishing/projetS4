@@ -1,3 +1,6 @@
+<?php
+require_once __DIR__.'/../../config/config.php';   
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -37,7 +40,7 @@
   </table>
 
   <script>
-    const apiBase = "http://localhost/S4(htdocs)/projetS4/ws";
+    const apiBase = "http://localhost<?= BASE_URL ?>";
 
     function ajax(method, url, data, callback, sendJson = false) {
       const xhr = new XMLHttpRequest();
