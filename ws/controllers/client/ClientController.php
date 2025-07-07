@@ -1,8 +1,6 @@
 <?php
-require_once __DIR__ . '/../../models/other/User.php';
+require_once __DIR__ . '/../../models/pret/Pret.php';
 require_once __DIR__ . '/../../models/other/Role.php';
-require_once __DIR__ . '/../../models/etablissement/TypePret.php';
-require_once __DIR__ . '/../../models/pret/DemandePret.php';
 
 class ClientController
 {
@@ -25,6 +23,23 @@ class ClientController
         include __DIR__ . '/../../views/client/demande.php';
     }
 
+    public static function mesPret()
+    {
+        session_start();
+
+        if (!isset($_SESSION['user'])) {
+            Flight::redirect('/login');
+            return;
+        }
+
+        $id_user = $_SESSION['user']['id'];
+        $prets = Pret::getPretsAccepte($id_user);
+
+        include __DIR__ . '/../../views/client/mesPret.php';
+    }
+
+
+
     // Traite la soumission du formulaire (POST)
     public static function store()
     {
@@ -40,7 +55,7 @@ class ClientController
 
         Flight::redirect('/login');
     }
-    public static function storeDemande()
+    public static function storePret()
     {
         session_start();
 
@@ -51,7 +66,7 @@ class ClientController
 
         $data = (object)[
             'id_user'     => $_SESSION['user']['id'],
-            'id_statut'   => 1, 
+            'id_statut'   => 1, // Statut initial "en attente"
             'valeur'      => Flight::request()->data->valeur,
             'dateDebut'   => Flight::request()->data->dateDebut,
             'duree'       => Flight::request()->data->duree,
@@ -59,10 +74,11 @@ class ClientController
             'commentaire' => Flight::request()->data->commentaire ?? null
         ];
 
-        DemandePret::create($data);
+        Pret::create($data);
 
-        Flight::redirect('/client');
+        Flight::redirect('/demande');
     }
+
 
 
 

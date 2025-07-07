@@ -31,10 +31,15 @@ Flight::route('GET /hello', ['HelloController', 'afficher']);
 Flight::route('GET /client', ['ClientController', 'afficher']);
 Flight::route('GET /demande', ['ClientController', 'demande']);
 Flight::route('POST /client/create', ['ClientController', 'store']);
+Flight::route('POST /pret/demande', ['ClientController', 'storePret']);
+Flight::route('GET /mesPret', ['ClientController', 'mesPret']);
 
 
 // Etablissement 
 Flight::route('GET /etablissement', ['EtablissementController', 'afficher']);
+Flight::route('GET /demandePret', ['EtablissementController', 'demandePret']);
+Flight::route('POST /pret/decision', ['EtablissementController', 'decision']);
+
 
 //Investisseur
 Flight::route('GET /investisseur', ['InvestisseurController', 'afficher']);

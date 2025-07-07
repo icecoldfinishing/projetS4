@@ -7,10 +7,12 @@ $user = isset($_SESSION['user']) ? $_SESSION['user'] : null;
 ?>
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
   <meta charset="UTF-8">
   <title>Demande de Prêt</title>
 </head>
+
 <body>
   <h1>Demande de Prêt</h1>
 
@@ -18,7 +20,8 @@ $user = isset($_SESSION['user']) ? $_SESSION['user'] : null;
     <p>Bienvenue, <strong><?= htmlspecialchars($user['prenom']) ?> <?= htmlspecialchars($user['nom']) ?></strong> (ID: <?= $user['id'] ?>)</p>
   <?php else: ?>
     <p>Utilisateur non connecté. <a href="<?= BASE_URL ?>/login">Se connecter</a></p>
-    <?php exit(); // Bloque l'accès si pas connecté ?>
+    <?php exit(); // Bloque l'accès si pas connecté 
+    ?>
   <?php endif; ?>
 
   <form method="post" action="<?= BASE_URL ?>/pret/demande">
@@ -47,9 +50,15 @@ $user = isset($_SESSION['user']) ? $_SESSION['user'] : null;
       </select>
     </div>
 
+    <div>
+      <textarea name="commentaire" id="commentaire" placeholder="Ajoutez un commentaire..." rows="4" cols="50"></textarea>
+    </div>
+
     <button type="submit">Faire la demande de prêt</button>
   </form>
 
+
   <p><a href="<?= BASE_URL ?>/client">Retour à l'accueil</a></p>
 </body>
+
 </html>
