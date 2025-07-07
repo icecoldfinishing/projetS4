@@ -36,8 +36,9 @@ CREATE TABLE investissement (
 CREATE TABLE typePret (
   id INT PRIMARY KEY AUTO_INCREMENT,
   nom VARCHAR(255),
-  taux DECIMAL(10,2)
-)
+  taux DECIMAL(10,2),
+  durre int
+);
 
 CREATE TABLE pret (
   id INT PRIMARY KEY AUTO_INCREMENT,
