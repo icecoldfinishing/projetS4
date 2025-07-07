@@ -25,5 +25,6 @@ Flight::route('GET /etablissement', ['EtablissementController', 'afficher']);
 //Investisseur
 Flight::route('GET /investisseur', ['InvestisseurController', 'afficher']);
 
-//Login
+// Login
 Flight::route('GET /login', ['LoginController', 'afficher']);
+Flight::route('POST /login', ['LoginController', 'connecter']);
