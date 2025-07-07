@@ -35,6 +35,12 @@ CREATE TABLE investissement (
   FOREIGN KEY (id_statut) REFERENCES statut(id)
 );
 
+CREATE TABLE typePret (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  nom VARCHAR(255),
+  taux DECIMAL(10,2)
+)
+
 CREATE TABLE pret (
   id INT PRIMARY KEY AUTO_INCREMENT,
   id_user INT,
@@ -42,9 +48,10 @@ CREATE TABLE pret (
   valeur INT,
   dateDebut DATE,
   duree INT,
-  taux INT,
+  id_typePret INT,
   FOREIGN KEY (id_user) REFERENCES user(id),
-  FOREIGN KEY (id_statut) REFERENCES statut(id)
+  FOREIGN KEY (id_statut) REFERENCES statut(id),
+  FOREIGN KEY (id_typePret) REFERENCES typePret(id)
 );
 
 CREATE TABLE remboursement (
