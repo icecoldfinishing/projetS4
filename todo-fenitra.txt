@@ -1,0 +1,52 @@
+🔐 1. Gestion des comptes clients
+Création de comptes clients (particulier, entreprise)
+Identification et authentification
+Mise à jour des informations personnelles
+Historique des opérations
+
+💰 2. Demande de prêt
+Formulaire de demande de prêt (montant, durée, type de prêt)
+Simulation de prêt (calcul des mensualités, taux d’intérêt, durée)
+Vérification d’éligibilité automatique (evaluation du dossier)
+
+🧮 3. Évaluation du dossier
+Analyse de solvabilité du client (revenus, dettes, historique bancaire)
+Calcul du score de crédit (Justificatif=fiche de paie) (pas obligatoire)
+Validation ou refus du prêt (manuelle ou automatisée)
+Notification de la décision au client
+
+✅ 4. Validation et signature
+Génération automatique du contrat de prêt
+Signature électronique sécurisée (pas obligatoire)
+Enregistrement légal du contrat (pas obligatoire)
+
+💳 5. Décaissement du prêt
+Transfert des fonds sur le compte du client (automatisée)
+Notification de décaissement
+Mise à jour du solde
+
+📅 6. Suivi des remboursements
+Génération de l’échéancier (dates, montants, intérêts)
+Notifications de rappel avant chaque paiement (2-3 jours modifiable)
+Paiement automatique ou manuel
+Affichage du solde restant dû
+
+⚠️ 7. Gestion des impayés
+Système d’alerte en cas de retard
+Système d’alerte en cas de fonds insuffisant 
+Pénalités de retard
+Mise en relation avec un conseiller
+Plan de rééchelonnement (si négocié) (pas obligatoire)
+
+📊 8. Statistiques et reporting
+Suivi global des prêts (octroyés, en cours, remboursés)
+Statistiques par type de prêt, par région, par client
+Tableau de bord pour les agents bancaires
+
+🔒 9. Sécurité & conformité (pas obligatoire)
+Authentification forte (2FA)
+Journalisation des actions (audit log)
+Conformité réglementaire (KYC, AML, etc.)
+
+
+
