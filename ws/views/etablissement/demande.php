@@ -44,6 +44,14 @@ require_once __DIR__ . '/../../../ws/config/config.php';
 <body>
   <h1>Demandes de Prêt </h1>
 
+  <?php if (isset($errorMessage) && $errorMessage !== null): ?>
+    <p style="color: red;"><?= htmlspecialchars($errorMessage) ?></p>
+  <?php endif; ?>
+
+  <?php if (isset($successMessage) && $successMessage !== null): ?>
+    <p style="color: green;"><?= htmlspecialchars($successMessage) ?></p>
+  <?php endif; ?>
+
   <p><a href="<?= BASE_URL ?>/hello">⬅️ Retour à l'accueil</a></p>
 
   <?php if (!empty($prets)): ?>
