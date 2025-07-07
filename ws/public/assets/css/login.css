@@ -124,4 +124,31 @@ body {
   border: 1px solid #2d79f3;
 }
 
-    
+    /* Style pour les éléments <select> */
+select.input {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 10px;
+  width: 100%;
+  font-family: inherit;
+  font-size: 14px;
+  color: #151717;
+  cursor: pointer;
+}
+
+/* Pour le focus du select */
+select.input:focus {
+  outline: none;
+}
+
+/* Style optionnel pour les options */
+select.input option {
+  font-size: 14px;
+  padding: 10px;
+  background: white;
+  color: #151717;
+}
