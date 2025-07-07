@@ -48,5 +48,7 @@ Authentification forte (2FA)
 Journalisation des actions (audit log)
 Conformité réglementaire (KYC, AML, etc.)
 
+9.Gestion des fonds de notre établissement
+
 
 
