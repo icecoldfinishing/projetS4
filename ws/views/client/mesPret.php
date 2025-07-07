@@ -3,6 +3,7 @@ require_once __DIR__ . '/../../../ws/config/config.php';
 ?>
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
   <meta charset="UTF-8">
   <title>Demandes de Prêt</title>
@@ -12,17 +13,21 @@ require_once __DIR__ . '/../../../ws/config/config.php';
       width: 100%;
       margin-top: 20px;
     }
-    th, td {
+
+    th,
+    td {
       border: 1px solid #ccc;
       padding: 8px;
       text-align: left;
       vertical-align: middle;
     }
+
     th {
       background-color: #eee;
     }
   </style>
 </head>
+
 <body>
   <h1>Demandes de Prêt</h1>
 
@@ -41,6 +46,7 @@ require_once __DIR__ . '/../../../ws/config/config.php';
           <th>Type de prêt</th>
           <th>Commentaire</th>
           <th>Statut</th>
+          <th>Actions</th>
         </tr>
       </thead>
       <tbody>
@@ -48,13 +54,19 @@ require_once __DIR__ . '/../../../ws/config/config.php';
           <tr>
             <td><?= htmlspecialchars($pret['id']) ?></td>
             <td><?= htmlspecialchars($pret['id_user']) ?></td>
-            <td><?= htmlspecialchars($pret['valeur']) ?> €</td>
+            <td><?= htmlspecialchars($pret['valeur']) ?> </td>
             <td><?= htmlspecialchars($pret['dateDebut']) ?></td>
             <td><?= htmlspecialchars($pret['duree']) ?></td>
             <td><?= htmlspecialchars($pret['delai']) ?></td>
             <td><?= htmlspecialchars($pret['id_typePret']) ?></td>
             <td><?= nl2br(htmlspecialchars($pret['commentaire'])) ?></td>
             <td><?= htmlspecialchars($pret['id_statut']) ?></td>
+            <td>
+              <form method="post" action="<?= BASE_URL ?>/pret/export-pdf">
+                <input type="hidden" name="id" value="<?= htmlspecialchars($pret['id']) ?>">
+                <button type="submit">📄 Exporter en PDF</button>
+              </form>
+            </td>
           </tr>
         <?php endforeach; ?>
       </tbody>
@@ -63,4 +75,5 @@ require_once __DIR__ . '/../../../ws/config/config.php';
     <p>Aucune demande de prêt trouvée.</p>
   <?php endif; ?>
 </body>
+
 </html>
