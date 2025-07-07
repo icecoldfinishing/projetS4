@@ -29,16 +29,13 @@ Mise à jour du profil (informations personnelles)
 Demande de prêt
 Choix du type de prêt
 Saisie du montant et de la durée souhaitée
-Téléversement de justificatifs (optionnel)
 Simulation du prêt : mensualités, durée, taux d’intérêt
 Envoi de la demande
 Suivi du dossier
 Notification de la validation ou du refus
 Accès au contrat généré
-Signature du contrat (optionnelle)
-Décaissement
+Décaissement (Le décaissement est l’action de transférer l’argent du prêt au client, après que sa demande a été validée.)
 Réception des fonds automatiquement sur le compte
-Notification de réception
 Remboursements
 Suivi de l’échéancier (dates, montants à payer)
 Paiement manuel ou automatique
@@ -46,7 +43,6 @@ Notifications avant échéance (modifiables)
 Impayés
 Alertes en cas de retard ou de fonds insuffisants
 Possibilité de demander un rééchelonnement du prêt
-Consultation
 Solde restant dû
 Historique des paiements
 Statistiques personnelles (prêts en cours, remboursés)
