@@ -52,7 +52,6 @@ Réception des demandes
 Analyse de solvabilité (revenus, dettes, historique)
 Validation ou refus manuel / automatique
 Génération du contrat
-Décaissement
 Transfert des fonds à partir du solde de l’EF
 Mise à jour du solde disponible
 Suivi global des remboursements
@@ -60,6 +59,4 @@ Liste des prêts en cours
 Gestion des impayés : alertes, pénalités, notifications
 Rapports et statistiques
 Nombre de prêts validés, en cours, remboursés
-Taux de défaut
-Répartition par type de prêt, zone géographique, profil client
-Sécurité et conformité (optionnel mais recommandé)
+Taux de défaut (par rapport aux type de prêts)
