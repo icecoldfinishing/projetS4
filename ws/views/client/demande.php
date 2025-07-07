@@ -1,5 +1,9 @@
 <?php
+session_start();
 require_once __DIR__ . '/../../../ws/config/config.php';
+
+// Vérifie si un utilisateur est connecté
+$user = isset($_SESSION['user']) ? $_SESSION['user'] : null;
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -9,6 +13,13 @@ require_once __DIR__ . '/../../../ws/config/config.php';
 </head>
 <body>
   <h1>Demande de Prêt</h1>
+
+  <?php if ($user): ?>
+    <p>Bienvenue, <strong><?= htmlspecialchars($user['prenom']) ?> <?= htmlspecialchars($user['nom']) ?></strong> (ID: <?= $user['id'] ?>)</p>
+  <?php else: ?>
+    <p>Utilisateur non connecté. <a href="<?= BASE_URL ?>/login">Se connecter</a></p>
+    <?php exit(); // Bloque l'accès si pas connecté ?>
+  <?php endif; ?>
 
   <form method="post" action="<?= BASE_URL ?>/pret/create">
 

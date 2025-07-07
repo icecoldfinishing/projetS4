@@ -4,6 +4,8 @@ require_once __DIR__ . '/../../models/other/User.php';
 class LoginController {
     
     public static function afficher() {
+        session_start();
+        session_destroy();
         include __DIR__ . '/../../views/other/login.php';
     }
 
