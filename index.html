@@ -34,12 +34,19 @@
   </table>
 
   <script>
+    const apiBase = "http://localhost/S4(htdocs)/projetS4/ws";
     const apiBase = "http://localhost/php/projetS4/ws";
 
-    function ajax(method, url, data, callback) {
+    function ajax(method, url, data, callback, sendJson = false) {
       const xhr = new XMLHttpRequest();
       xhr.open(method, apiBase + url, true);
-      xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+       if (sendJson) {
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.send(JSON.stringify(data));
+  } else {
+    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    xhr.send(data);
+  }
       xhr.onreadystatechange = () => {
         if (xhr.readyState === 4 && xhr.status === 200) {
           callback(JSON.parse(xhr.responseText));
@@ -78,12 +85,12 @@
       const age = document.getElementById("age").value;
 
       const data = `nom=${encodeURIComponent(nom)}&prenom=${encodeURIComponent(prenom)}&email=${encodeURIComponent(email)}&age=${age}`;
-
+      const body = { nom, prenom, email, age };
       if (id) {
-        ajax("PUT", `/etudiants/${id}`, data, () => {
-          resetForm();
-          chargerEtudiants();
-        });
+        ajax("PUT", `/etudiants/${id}`, body, () => {
+        resetForm();
+        chargerEtudiants();
+        }, true);   
       } else {
         ajax("POST", "/etudiants", data, () => {
           resetForm();

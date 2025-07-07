@@ -23,13 +23,19 @@ Flight::route('POST /etudiants', function() {
     Flight::json(['message' => 'Étudiant ajouté', 'id' => $db->lastInsertId()]);
 });
 
-Flight::route('PUT /etudiants/@id', function($id) {
-    $data = Flight::request()->data;
-    $db = getDB();
-    $stmt = $db->prepare("UPDATE etudiant SET nom = ?, prenom = ?, email = ?, age = ? WHERE id = ?");
+Flight::route('PUT /etudiants/@id', function ($id) {
+    $data = Flight::request()->data;     
+    if (empty($data->nom) && Flight::request()->getBody() !== '') {
+        parse_str(Flight::request()->getBody(), $tmp);
+        $data = (object) $tmp;          
+    }
+    $db   = getDB();
+    $stmt = $db->prepare("UPDATE etudiant SET nom = ?, prenom = ?, email  = ?,  age = ? WHERE id = ?"
+    );
     $stmt->execute([$data->nom, $data->prenom, $data->email, $data->age, $id]);
     Flight::json(['message' => 'Étudiant modifié']);
 });
+
 
 Flight::route('DELETE /etudiants/@id', function($id) {
     $db = getDB();
