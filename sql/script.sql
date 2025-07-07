@@ -39,7 +39,7 @@ CREATE TABLE typePret (
   id INT PRIMARY KEY AUTO_INCREMENT,
   nom VARCHAR(255),
   taux DECIMAL(10,2),
-  durre int
+  duree int
 );
 
 CREATE TABLE pret (
