@@ -1,47 +1,7 @@
 <?php
-require 'vendor/autoload.php';
-require 'db.php';
-
-Flight::route('GET /etudiants', function() {
-    $db = getDB();
-    $stmt = $db->query("SELECT * FROM etudiant");
-    Flight::json($stmt->fetchAll(PDO::FETCH_ASSOC));
-});
-
-Flight::route('GET /etudiants/@id', function($id) {
-    $db = getDB();
-    $stmt = $db->prepare("SELECT * FROM etudiant WHERE id = ?");
-    $stmt->execute([$id]);
-    Flight::json($stmt->fetch(PDO::FETCH_ASSOC));
-});
-
-Flight::route('POST /etudiants', function() {
-    $data = Flight::request()->data;
-    $db = getDB();
-    $stmt = $db->prepare("INSERT INTO etudiant (nom, prenom, email, age) VALUES (?, ?, ?, ?)");
-    $stmt->execute([$data->nom, $data->prenom, $data->email, $data->age]);
-    Flight::json(['message' => 'Étudiant ajouté', 'id' => $db->lastInsertId()]);
-});
-
-Flight::route('PUT /etudiants/@id', function ($id) {
-    $data = Flight::request()->data;     
-    if (empty($data->nom) && Flight::request()->getBody() !== '') {
-        parse_str(Flight::request()->getBody(), $tmp);
-        $data = (object) $tmp;          
-    }
-    $db   = getDB();
-    $stmt = $db->prepare("UPDATE etudiant SET nom = ?, prenom = ?, email  = ?,  age = ? WHERE id = ?"
-    );
-    $stmt->execute([$data->nom, $data->prenom, $data->email, $data->age, $id]);
-    Flight::json(['message' => 'Étudiant modifié']);
-});
-
-
-Flight::route('DELETE /etudiants/@id', function($id) {
-    $db = getDB();
-    $stmt = $db->prepare("DELETE FROM etudiant WHERE id = ?");
-    $stmt->execute([$id]);
-    Flight::json(['message' => 'Étudiant supprimé']);
-});
+require_once __DIR__ . '/vendor/autoload.php';
+require_once __DIR__ . '/db.php';
+require_once __DIR__ . '/../app/controllers/EtudiantController.php';
+require_once __DIR__ . '/config/routes.php';
 
 Flight::start();
