@@ -51,6 +51,8 @@ CREATE TABLE pret (
     delai INT,
     id_typePret INT,
     commentaire TEXT,
+    assurance VARCHAR(255),
+    pourcentageAssurance DECIMAL(5,2),
     FOREIGN KEY (id_user) REFERENCES user(id),
     FOREIGN KEY (id_statut) REFERENCES statut(id),
     FOREIGN KEY (id_typePret) REFERENCES typePret(id)
@@ -93,3 +95,4 @@ CREATE TABLE annuite (
     valeurNette DECIMAL(10,2) NOT NULL,
     FOREIGN KEY (id_pret) REFERENCES pret(id)
 );
+
