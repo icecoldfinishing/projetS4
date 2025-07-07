@@ -74,7 +74,9 @@ class ClientController
             'duree'       => Flight::request()->data->duree,
             'delai'       => Flight::request()->data->delai,
             'id_typePret' => Flight::request()->data->id_typePret,
-            'commentaire' => Flight::request()->data->commentaire ?? null
+            'commentaire' => Flight::request()->data->commentaire ?? null,
+            'assurance' => (isset($_POST['assurance']) && $_POST['assurance'] !== '') ? $_POST['assurance'] : null,
+            'valeurAssurance' => (isset($_POST['valeurAssurance']) && $_POST['valeurAssurance'] !== '') ? $_POST['valeurAssurance'] : null
         ];
 
         Pret::create($data);
