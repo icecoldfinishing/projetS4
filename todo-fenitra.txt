@@ -1,43 +1,75 @@
 🏦 1. Ajout de fonds dans l’Établissement Financier (EF)
-Enregistrement des apports de fonds (investisseurs, capital initial, etc.)
+🎯 Côté établissement :
+Saisie des dépôts de fonds (par les administrateurs ou investisseurs)
+Historique des entrées et sorties de fonds
+Vérification automatique de la capacité de prêt restante
+Génération de rapports financiers internes (bilan de trésorerie)
+❌ Côté client :
+Pas d’accès direct à cette fonctionnalité
 
-Suivi du solde global disponible pour octroyer des prêts
-
-Historique des mouvements de fonds (entrées et sorties)
-
-Contrôle automatique de la capacité de prêt selon les fonds disponibles
-
-🧾 2. Création de types de prêts
-Création de différents types de prêts (personnel, immobilier, étudiant, etc.)
-
-Définition des paramètres pour chaque type :
-
+🧾 2. Création et gestion des types de prêts
+🎯 Côté établissement :
+Création de types de prêts avec les paramètres suivants :
+Nom du type (ex : prêt personnel, immobilier, étudiant…)
 Taux d’intérêt (fixe ou variable)
+Durée maximale autorisée
+Montant minimal et maximal autorisé
+Activation / désactivation / ajout d’un type de prêt
+Mise à jour des conditions selon les besoins (campagnes promotionnelles, changement de politique, etc.)
 
-Durée maximale
-
-Montant minimal et maximal
-
-Gestion dynamique des taux (modification possible selon les périodes ou profils)
-
-Activation/désactivation de types de prêts
+✅ Côté client :
+Consultation des types de prêts disponibles
+Simulation possible pour chaque type (voir les conditions)
 
 👥 3. Gestion des prêts pour les clients
-Demande de prêt via formulaire (montant, type de prêt, durée)
-
-Simulation de prêt (calcul des mensualités, intérêts, coût total)
-
-Évaluation du dossier client (solvabilité(argent compte,revenue))
-
-Validation manuelle ou automatique du prêt
-
-Génération du contrat de prêt, avec option de signature électronique
-
-Décaissement automatisé des fonds si validé
-
-Suivi des remboursements (échéancier, notifications, paiements)
-
-Gestion des retards (alertes, pénalités, rééchelonnement possible)
-
-
-Gestion des utilisateurs : rôles (client, agent, admin)
+🔸 A. Fonctionnalités côté client :
+Création de compte utilisateur
+Inscription et identification
+Mise à jour du profil (informations personnelles)
+Demande de prêt
+Choix du type de prêt
+Saisie du montant et de la durée souhaitée
+Téléversement de justificatifs (optionnel)
+Simulation du prêt : mensualités, durée, taux d’intérêt
+Envoi de la demande
+Suivi du dossier
+Notification de la validation ou du refus
+Accès au contrat généré
+Signature du contrat (optionnelle)
+Décaissement
+Réception des fonds automatiquement sur le compte
+Notification de réception
+Remboursements
+Suivi de l’échéancier (dates, montants à payer)
+Paiement manuel ou automatique
+Notifications avant échéance (modifiables)
+Impayés
+Alertes en cas de retard ou de fonds insuffisants
+Possibilité de demander un rééchelonnement du prêt
+Consultation
+Solde restant dû
+Historique des paiements
+Statistiques personnelles (prêts en cours, remboursés)
+🔹 B. Fonctionnalités côté établissement :
+Gestion des prêts clients
+Réception des demandes
+Analyse de solvabilité (revenus, dettes, historique)
+Attribution d’un score de crédit
+Validation ou refus manuel / automatique
+Génération du contrat
+Décaissement
+Transfert des fonds à partir du solde de l’EF
+Mise à jour du solde disponible
+Suivi global des remboursements
+Liste des prêts en cours
+Monitoring des échéances
+Gestion des impayés : alertes, pénalités, notifications
+Rééchelonnement ou intervention d’un conseiller si nécessaire
+Rapports et statistiques
+Nombre de prêts validés, en cours, remboursés
+Taux de défaut
+Répartition par type de prêt, zone géographique, profil client
+Sécurité et conformité (optionnel mais recommandé)
+Authentification 2FA pour agents
+Suivi des actions (journal d’audit)
+Respect des règles KYC/AML
