@@ -1,4 +1,4 @@
-🏦 1. Investissements dans l’Établissement Financier (EF)
+🏦 1. Investissements dans l’Établissement Financier (EF) (Fenitra)
 Avec proposition, validation, utilisation, et remboursement
 🔹 A. Côté Investisseur
 1. 📥 Proposer un investissement
@@ -47,7 +47,7 @@ Suivi du solde restant et impact sur la capacité de prêt
 
 
 
-🧾 2. Création et gestion des types de prêts
+🧾 2. Création et gestion des types de prêts (Sanda)
 🎯 Côté établissement :
 Création de types de prêts avec les paramètres suivants :
 Nom du type (ex : prêt personnel, immobilier, étudiant…)
@@ -60,7 +60,7 @@ Mise à jour des conditions selon les besoins (campagnes promotionnelles, change
 Consultation des types de prêts disponibles
 Simulation possible pour chaque type (voir les conditions)
 
-👥 3. Gestion des prêts pour les clients
+👥 3. Gestion des prêts pour les clients (sanda)
 🔸 A. Fonctionnalités côté client :
 Création de compte utilisateur
 Inscription et identification
