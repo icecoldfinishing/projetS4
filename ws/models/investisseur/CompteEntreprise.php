@@ -25,55 +25,58 @@ class CompteEntreprise
         $stmt = $db->prepare("INSERT INTO compteentreprise (valeur,date) VALUES (?,?)");
         return $stmt->execute([$newValeur, $date]);
     }
-    public static function getSoldeParMois(int $mDebut, int $aDebut, int $mFin, int $aFin): array
-    {
-        $db = getDB();
+     public static function getSoldeParMois(int $mDebut, int $aDebut, int $mFin, int $aFin): array
+{
+    $db = getDB();
 
-        $dateStart = sprintf('%04d-%02d-01', $aDebut, $mDebut);
-        $dateEnd   = date('Y-m-t', strtotime(sprintf('%04d-%02d-01', $aFin, $mFin)));
+    $dateStart = sprintf('%04d-%02d-01', $aDebut, $mDebut);
+    $dateEnd   = date('Y-m-t', strtotime(sprintf('%04d-%02d-01', $aFin, $mFin)));
 
-        $sql = "
+    // 1) Get the cumulative sum before the start date
+    $stmt1 = $db->prepare("SELECT COALESCE(SUM(valeur), 0) AS initial_solde FROM compteEntreprise WHERE date < :start");
+    $stmt1->execute([':start' => $dateStart]);
+    $initialSolde = (float)$stmt1->fetchColumn();
+
+    // 2) Get cumulative sums per month in the period
+    $sql = "
         SELECT 
             EXTRACT(MONTH FROM date) AS mois,
             EXTRACT(YEAR FROM date) AS annee,
-            SUM(valeur) OVER (
-                ORDER BY EXTRACT(YEAR FROM date), EXTRACT(MONTH FROM date)
-                ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW
-            ) AS solde
-            FROM compteEntreprise
-            WHERE date BETWEEN :start AND :end
-            GROUP BY EXTRACT(YEAR FROM date), EXTRACT(MONTH FROM date)
-            ORDER BY annee, mois
+            SUM(valeur) AS valeur_mois
+        FROM compteEntreprise
+        WHERE date BETWEEN :start AND :end
+        GROUP BY EXTRACT(YEAR FROM date), EXTRACT(MONTH FROM date)
+        ORDER BY annee, mois
     ";
 
-        $stmt = $db->prepare($sql);
-        $stmt->execute([
-            ':start' => $dateStart,
-            ':end'   => $dateEnd
-        ]);
+    $stmt2 = $db->prepare($sql);
+    $stmt2->execute([
+        ':start' => $dateStart,
+        ':end'   => $dateEnd,
+    ]);
 
-        $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $rows = $stmt2->fetchAll(PDO::FETCH_ASSOC);
 
-        $result = [];
-        $total = 0;
+    $result = [];
+    $cumulative = $initialSolde; // start with the initial balance
 
-        foreach ($rows as $row) {
-            $mois = (int)$row['mois'];
-            $annee = (int)$row['annee'];
-            $solde = (float)$row['solde'];
+    foreach ($rows as $row) {
+        $mois = (int)$row['mois'];
+        $annee = (int)$row['annee'];
+        $valeurMois = (float)$row['valeur_mois'];
 
-            $result[] = [
-                'mois' => $mois,
-                'annee' => $annee,
-                'solde' => round($solde, 2)
-            ];
+        $cumulative += $valeurMois; // add this month's valeur to cumulative
 
-            $total = $solde; // last one will be the final cumulative total
-        }
-
-        return [
-            'mois' => $result,
-            'total' => round($total, 2)
+        $result[] = [
+            'mois' => $mois,
+            'annee' => $annee,
+            'solde' => round($cumulative, 2) // cumulative solde including previous months + initial
         ];
     }
+
+    return [
+        'mois' => $result,
+        'total' => round($cumulative, 2)
+    ];
+}
 }
