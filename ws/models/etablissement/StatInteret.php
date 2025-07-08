@@ -32,13 +32,10 @@ public static function getInteretParPeriode(int $mDebut, int $aDebut, int $mFin,
     $dateEnd   = date('Y-m-t', strtotime(sprintf('%04d-%02d-01', $aFin, $mFin)));
 
     $sql = "
-        SELECT r.dateRemboursement, r.mensualite,
-               p.valeur AS principal, p.duree, p.delai, p.assurance AS assurance_mode,
-               tp.taux, tp.assurance AS taux_assurance,
-               p.dateDebut
+        SELECT r.dateRemboursement, r.valeur AS remboursement_valeur,
+               p.valeur AS capital, p.duree
         FROM remboursement r
         JOIN pret p ON r.id_pret = p.id
-        JOIN typePret tp ON p.id_typePret = tp.id
         WHERE r.dateRemboursement BETWEEN ? AND ?
         ORDER BY r.dateRemboursement
     ";
@@ -50,45 +47,25 @@ public static function getInteretParPeriode(int $mDebut, int $aDebut, int $mFin,
     $interetsByMonth = [];
     $total = 0;
 
-    foreach ($rows as $r) {
-        $dateRemboursement = new DateTime($r['dateRemboursement']);
-        $annee = (int)$dateRemboursement->format('Y');
-        $mois = (int)$dateRemboursement->format('m');
+    foreach ($rows as $row) {
+        $date = new DateTime($row['dateRemboursement']);
+        $annee = (int)$date->format('Y');
+        $mois = (int)$date->format('m');
 
-        $P = (float)$r['principal'];
-        $n = (int)$r['duree'];
-        $rTaux = (float)$r['taux'] / 100 / 12; // taux mensuel
-        $assuranceMode = (int)$r['assurance_mode']; // 1 = unique, 2 = mensuelle
-        $tauxAssurance = (float)$r['taux_assurance']; // en %
-        $mensualite = (float)$r['mensualite'];
+        $remboursement = (float)$row['remboursement_valeur'];
+        $capital = (float)$row['capital'];
+        $duree = (int)$row['duree'];
 
-        $dateDebut = new DateTime($r['dateDebut']);
-        $diffMonths = ($annee - (int)$dateDebut->format('Y')) * 12 + ($mois - (int)$dateDebut->format('m')) + 1;
+        if ($duree <= 0) continue;
 
-        if ($diffMonths < 1 || $diffMonths > $n) {
-            continue;
-        }
-
-        // Intérêt fixe basé sur capital de base
-        $interetMensuel = round($P * $rTaux, 2);
-
-        // Assurance
-        $assuranceMensuelle = 0;
-        if ($assuranceMode === 1) {
-            // Assurance payée une fois, au premier mois seulement
-            if ($diffMonths === 1) {
-                $assuranceMensuelle = round($P * $tauxAssurance / 100, 2);
-            }
-        } elseif ($assuranceMode === 2) {
-            $assuranceMensuelle = round($P * $tauxAssurance / 100 / $n, 2);
-        }
-
-        $interetMensuel += $assuranceMensuelle;
+        $principalMensuel = $capital / $duree;
+        $interetMensuel = $remboursement - $principalMensuel;
 
         $key = sprintf('%04d-%02d', $annee, $mois);
         if (!isset($interetsByMonth[$key])) {
             $interetsByMonth[$key] = 0;
         }
+
         $interetsByMonth[$key] += $interetMensuel;
         $total += $interetMensuel;
     }
@@ -103,7 +80,7 @@ public static function getInteretParPeriode(int $mDebut, int $aDebut, int $mFin,
         ];
     }
 
-    usort($resultRows, function($a, $b) {
+    usort($resultRows, function ($a, $b) {
         return $a['annee'] === $b['annee']
             ? $a['mois'] <=> $b['mois']
             : $a['annee'] <=> $b['annee'];
@@ -115,7 +92,13 @@ public static function getInteretParPeriode(int $mDebut, int $aDebut, int $mFin,
     ];
 }
 
-
-
-
 }
+
+
+
+
+
+
+
+
+

@@ -9,7 +9,7 @@ class Remboursement {
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public static function generateRemboursements(int $pretId): float
+public static function generateRemboursements(int $pretId): float
 {
     $db = getDB();
 
@@ -26,18 +26,21 @@ class Remboursement {
     
     if (!$p) throw new RuntimeException("Prêt $pretId introuvable");
 
-    $P = (float)$p['valeur'];
-    $n = (int)$p['duree'];
-    $g = (int)$p['delai'];
-    $r = (float)$p['taux'] / 100 / 12;
+    $P = (float)$p['valeur'];           // capital emprunté
+    $n = (int)$p['duree'];              // durée en mois
+    $g = (int)$p['delai'];              // période de grâce
+    $r = (float)$p['taux'] / 100 / 12;  // taux mensuel
     $assuranceMode = (int)$p['assurance'];
     $tauxAssurance = (float)$p['taux_assurance'];
 
+    // Mensualité hors assurance
     $M = round($P * $r / (1 - pow(1 + $r, -$n)), 2);
 
-    $assuranceMontant = 0;
-    if ($assuranceMode === 1) {
-        $assuranceMontant = round($P * $tauxAssurance / 100, 2);
+    // Assurance répartie chaque mois
+    $assuranceMensuelle = 0;
+    if ($assuranceMode === 1 || $assuranceMode === 2) {
+        $assuranceTotal = $P * $tauxAssurance / 100;
+        $assuranceMensuelle = round($assuranceTotal / $n, 2);
     }
 
     $ins = $db->prepare("
@@ -51,10 +54,7 @@ class Remboursement {
     $total = 0;
 
     for ($i = 1; $i <= $n; $i++) {
-        $value = $M;
-        if ($i === 1 && $assuranceMontant > 0) {
-            $value += $assuranceMontant;
-        }
+        $value = $M + $assuranceMensuelle;
 
         $ins->execute([
             $pretId,
@@ -69,6 +69,7 @@ class Remboursement {
 
     return round($total, 2);
 }
+
 
 
 
