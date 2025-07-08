@@ -97,16 +97,16 @@ require_once __DIR__ . '/../../../ws/config/config.php';
                 <?php foreach ($prets as $pret): ?>
                   <tr>
                     <td><?= htmlspecialchars($pret['id']) ?></td>
-                    <td><?= htmlspecialchars($pret['id_user']) ?></td>
+                    <td><?= htmlspecialchars(User::getNom($pret['id_user'])) ?></td>
                     <td><?= htmlspecialchars($pret['valeur']) ?> €</td>
                     <td><?= htmlspecialchars($pret['dateDebut']) ?></td>
                     <td><?= htmlspecialchars($pret['duree']) ?></td>
                     <td><?= htmlspecialchars($pret['delai']) ?></td> <!-- Nouvelle cellule -->
-                    <td><?= htmlspecialchars($pret['id_typePret']) ?></td>
+                    <td><?= htmlspecialchars(TypePret::getNomById($pret['id_typePret']) )?></td>
                     <td><?= nl2br(htmlspecialchars($pret['commentaire'])) ?></td>
                     <td><?= htmlspecialchars($pret['Assurance'] ?? 'N/A') ?></td>
                     <td><?= htmlspecialchars($pret['valeurAssurance'] ?? 'N/A') ?></td>
-                    <td><?= htmlspecialchars($pret['id_statut']) ?></td>
+                    <td>En attente</td>
                     <td>
                       <form method="post" action="<?= BASE_URL ?>/pret/decision">
                         <input type="hidden" name="id" value="<?= htmlspecialchars($pret['id']) ?>">

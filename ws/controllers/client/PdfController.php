@@ -55,7 +55,7 @@ class PdfController
         $pdf->SetTextColor(255, 255, 255);
         $pdf->SetFont('Arial', 'B', 18);
         $pdf->SetXY(15, 8);
-        $pdf->Cell(0, 10, utf8_decode('BANQUE PARTENAIRE'), 0, 1, 'L');
+        $pdf->Cell(0, 10, utf8_decode('BANQUE OF AFRICA'), 0, 1, 'L');
         
         // Sous-titre
         $pdf->SetFont('Arial', '', 10);
@@ -228,8 +228,8 @@ class PdfController
         // Informations de contact
         $pdf->SetFont('Arial', 'I', 9);
         $pdf->SetTextColor(128, 128, 128);
-        $pdf->Cell(0, 5, utf8_decode('Banque Partenaire - 123 Rue de la Finance, 75001 Paris'), 0, 1, 'C');
-        $pdf->Cell(0, 5, utf8_decode('Tél: 01 23 45 67 89 - Email: contact@banque-partenaire.fr'), 0, 1, 'C');
+        $pdf->Cell(0, 5, utf8_decode('Banque of Africa - 123 Rue de la Finance, Antaninarenina'), 0, 1, 'C');
+        $pdf->Cell(0, 5, utf8_decode('Tél: +261 21 155 97 - Email: BOA@gmail.mg'), 0, 1, 'C');
         
         // Numéro de page
         $pdf->SetFont('Arial', '', 8);
