@@ -17,12 +17,13 @@ INSERT INTO user (id_role, nom, prenom, pwd) VALUES
   (2, 'Fenitra', 'Etablissement', 'mdp'),
   (3, 'Sanda', 'Client', 'mdp');
 
-INSERT INTO typePret (nom, taux, duree) VALUES
-('Prêt personnel', 5.00, 60),
-('Prêt immobilier', 3.00, 240),
-('Prêt auto', 4.50, 48),
-('Prêt etudiant', 2.50, 120),
-('Prêt travaux', 3.75, 72);
+INSERT INTO typePret (nom, taux, assurance, duree) VALUES
+('Prêt personnel', 5.00, 1.50, 60),
+('Prêt immobilier', 3.00, 0.80, 240),
+('Prêt auto', 4.50, 1.20, 48),
+('Prêt étudiant', 2.50, 0.50, 120),
+('Prêt travaux', 3.75, 1.00, 72);
+
 
 INSERT INTO compteEntreprise (valeur) VALUES (20000000);
 
