@@ -9,14 +9,8 @@ require_once __DIR__ . '/../../../ws/config/config.php';
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <!-- ===============================================-->
-  <!--    Document Title-->
-  <!-- ===============================================-->
   <title>Statistiques d'Intérêts - Open Enterprise</title>
 
-  <!-- ===============================================-->
-  <!--    Favicons-->
-  <!-- ===============================================-->
   <link rel="apple-touch-icon" sizes="180x180" href="<?= BASE_URL ?>/public/assets_template/img/favicons/apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="32x32" href="<?= BASE_URL ?>/public/assets_template/img/favicons/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="<?= BASE_URL ?>/public/assets_template/img/favicons/favicon-16x16.png">
@@ -26,20 +20,12 @@ require_once __DIR__ . '/../../../ws/config/config.php';
   <meta name="msapplication-TileImage" content="assets_template/img/favicons/mstile-150x150.png">
   <meta name="theme-color" content="#ffffff">
 
-  <!-- ===============================================-->
-  <!--    Stylesheets-->
-  <!-- ===============================================-->
   <link href="<?= BASE_URL ?>/public/assets_template/css/theme.css" rel="stylesheet" />
   <link href="vendors/swiper/swiper-bundle.min.css" rel="stylesheet">
-
-
 </head>
 
 <body data-bs-spy="scroll" data-bs-target="#navbar">
 
-  <!-- ===============================================-->
-  <!--    Main Content-->
-  <!-- ===============================================-->
   <main class="main" id="top">
     <nav class="navbar navbar-expand-xl navbar-light fixed-top px-0 pb-0 mb-2" id="navbar" data-navbar-darken-on-scroll="white">
       <div class="container-fluid align-items-center py-2">
@@ -47,7 +33,8 @@ require_once __DIR__ . '/../../../ws/config/config.php';
           <img class="logo" src="<?= BASE_URL ?>/public/assets_template/img/logo.png" alt="open enterprise" />
           <span class="ms-2 d-none d-sm-block fw-bold">Open Enterprise</span>
         </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
@@ -62,8 +49,6 @@ require_once __DIR__ . '/../../../ws/config/config.php';
       </div>
     </nav>
 
-    <!-- ============================================-->
-    <!-- <section> begin ============================-->
     <section class="pt-8 py-lg-0" id="hero">
       <div class="container-xxl">
         <div class="stats-container">
@@ -133,8 +118,6 @@ require_once __DIR__ . '/../../../ws/config/config.php';
       </div>
     </section>
 
-    <!-- ============================================-->
-    <!-- <section> begin ============================-->
     <section id="rea">
       <div class="container-xxl">
         <div class="row align-items-center">
@@ -152,8 +135,6 @@ require_once __DIR__ . '/../../../ws/config/config.php';
       </div>
     </section>
 
-    <!-- ============================================-->
-    <!-- <section> begin ============================-->
     <section class="py-4">
       <div class="container-xxl">
         <div class="row justify-content-center align-items-center">
@@ -168,9 +149,6 @@ require_once __DIR__ . '/../../../ws/config/config.php';
     </section>
   </main>
 
-  <!-- ===============================================-->
-  <!--    Scripts-->
-  <!-- ===============================================-->
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 
   <script>
@@ -348,7 +326,6 @@ require_once __DIR__ . '/../../../ws/config/config.php';
         return;
       }
 
-      // Afficher le loading
       document.getElementById("loading").classList.add("active");
 
       ajax("POST", "/stat/interets", {
@@ -365,15 +342,11 @@ require_once __DIR__ . '/../../../ws/config/config.php';
       );
     }
 
-    // Charger les données par défaut au chargement de la page
     window.addEventListener('load', function() {
       setTimeout(rechercher, 1000);
     });
   </script>
 
-  <!-- ===============================================-->
-  <!--    JavaScripts-->
-  <!-- ===============================================-->
   <script src="vendors/@popperjs/popper.min.js"></script>
   <script src="vendors/bootstrap/bootstrap.min.js"></script>
   <script src="vendors/is/is.min.js"></script>
