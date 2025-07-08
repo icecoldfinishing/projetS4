@@ -26,17 +26,15 @@ public static function generateRemboursements(int $pretId): float
     
     if (!$p) throw new RuntimeException("Prêt $pretId introuvable");
 
-    $P = (float)$p['valeur'];           // capital emprunté
-    $n = (int)$p['duree'];              // durée en mois
-    $g = (int)$p['delai'];              // période de grâce
-    $r = (float)$p['taux'] / 100 / 12;  // taux mensuel
+    $P = (float)$p['valeur'];           
+    $n = (int)$p['duree'];              
+    $g = (int)$p['delai'];              
+    $r = (float)$p['taux'] / 100 / 12;  
     $assuranceMode = (int)$p['assurance'];
     $tauxAssurance = (float)$p['taux_assurance'];
 
-    // Mensualité hors assurance
     $M = round($P * $r / (1 - pow(1 + $r, -$n)), 2);
 
-    // Assurance répartie chaque mois
     $assuranceMensuelle = 0;
     if ($assuranceMode === 1 || $assuranceMode === 2) {
         $assuranceTotal = $P * $tauxAssurance / 100;

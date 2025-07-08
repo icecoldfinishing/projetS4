@@ -19,7 +19,7 @@ class CompteEntreprise {
         return $stmt->execute([$newValeur, $date]);
     }
 
-    public function updateSolde($montant) {
+    public function updateSolde($montant, $date) {
         $lastValeur = $this->getLastValeur();
         $newValeur = $lastValeur - $montant;
         $stmt = $this->db->prepare("INSERT INTO compteentreprise (valeur,date) VALUES (?,NOW())");

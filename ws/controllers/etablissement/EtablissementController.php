@@ -78,10 +78,9 @@ class EtablissementController {
                 Flight::redirect('/demandePret');
                 return;
             } else {
-                $compteEntreprise->updateSolde($pret['valeur']);
+                $compteEntreprise->updateSolde($pret['valeur'],$pret['dateDebut']);
                 Pret::updateStatut($id, 2);  
                 $montant=Remboursement::generateRemboursements($id);
-                $compteEntreprise->ajouterFonds($montant);
                 $_SESSION['success_message'] = 'Prêt validé avec succès.';
             }
         } elseif ($action === 'refuser') {
