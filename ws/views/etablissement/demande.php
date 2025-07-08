@@ -77,6 +77,7 @@ require_once __DIR__ . '/../../../ws/config/config.php';
 
 
           <?php if (!empty($prets)): ?>
+            <p>Solde actuel : <?= CompteEntreprise::getLastValeur() ?> Ar</p>
             <table>
               <thead>
                 <tr>
