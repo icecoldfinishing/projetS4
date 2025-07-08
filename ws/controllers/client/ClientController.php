@@ -22,6 +22,11 @@ class ClientController
         $typesPret = TypePret::getAll();
         include __DIR__ . '/../../views/client/simulation.php';
     }
+    public static function simuler()
+    {
+        $typesPret = TypePret::getAll();
+        include __DIR__ . '/../../views/client/simulation.php';
+    }
     public static function demande()
     {
         $roles = Role::getAll();
