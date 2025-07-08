@@ -47,4 +47,13 @@ class User {
         $stmt = $db->prepare("DELETE FROM user WHERE id = ?");
         $stmt->execute([$id]);
     }
+    // Retourne uniquement le nom de l'utilisateur par son ID
+    public static function getNom($id) {
+        $db = getDB();
+        $stmt = $db->prepare("SELECT nom FROM user WHERE id = ?");
+        $stmt->execute([$id]);
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $result ? $result['nom'] : null;
+    }
+
 }
