@@ -72,6 +72,8 @@ require_once __DIR__ . '/../../../ws/config/config.php';
                     <form method="POST" action="<?php echo BASE_URL; ?>/investisseur/AjoutFonds">
                         <label for="valeur">Montant à ajouter :</label>
                         <input type="number" name="valeur" id="valeur" required>
+                        <label for="date">Date</label>
+                        <input type="date" name="date" id="date">
                         <button type="submit">Ajouter</button>
                     </form>
                 </div>

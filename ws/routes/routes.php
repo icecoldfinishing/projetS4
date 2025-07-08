@@ -37,10 +37,12 @@ Flight::route('POST /client/create', ['ClientController', 'store']);
 Flight::route('GET /client/create', ['ClientController', 'create']);
 Flight::route('POST /pret/demande', ['ClientController', 'storePret']);
 Flight::route('GET /mesPret', ['ClientController', 'mesPret']);
+Flight::route('GET /comparaison', ['ClientController', 'comparaison']);
 Flight::route('POST /pret/export-pdf', ['PdfController', 'exportPretPdf']);
 
 // Simulation
 Flight::route('POST /simulation/save', ['SimulationController', 'save']);
+Flight::route('GET /api/simulations', ['SimulationController', 'getSimulationsForUser']);
 
 
 

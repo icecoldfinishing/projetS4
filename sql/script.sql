@@ -47,7 +47,7 @@ CREATE TABLE pret (
     id_user INT,
     id_statut INT,
     valeur INT NOT NULL,
-    dateDebut DATE NOT NULL,
+    dateDebut DATE NOT NULL, 
     duree INT NOT NULL,
     delai INT,
     id_typePret INT,
@@ -70,10 +70,10 @@ CREATE TABLE remboursement (
     FOREIGN KEY (id_pret) REFERENCES pret(id)
 );
 
-DROP TABLE IF EXISTS compteEntreprise;
 CREATE TABLE compteEntreprise (
     id INT PRIMARY KEY AUTO_INCREMENT,
-    valeur INT NOT NULL
+    valeur INT NOT NULL,
+    date DATE
 );
 
 CREATE TABLE fondsEtablissement (

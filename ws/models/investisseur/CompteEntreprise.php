@@ -12,17 +12,17 @@ class CompteEntreprise {
         return $result ? $result['valeur'] : 0;
     }
 
-    public function ajouterFonds($montant) {
+    public function ajouterFonds($montant, $date) {
         $lastValeur = $this->getLastValeur();
         $newValeur = $lastValeur + $montant;
-        $stmt = $this->db->prepare("INSERT INTO compteentreprise (valeur) VALUES (?)");
-        return $stmt->execute([$newValeur]);
+        $stmt = $this->db->prepare("INSERT INTO compteentreprise (valeur, date) VALUES (?, ?)");
+        return $stmt->execute([$newValeur, $date]);
     }
 
     public function updateSolde($montant) {
         $lastValeur = $this->getLastValeur();
         $newValeur = $lastValeur - $montant;
-        $stmt = $this->db->prepare("INSERT INTO compteentreprise (valeur) VALUES (?)");
+        $stmt = $this->db->prepare("INSERT INTO compteentreprise (valeur,date) VALUES (?,NOW())");
         return $stmt->execute([$newValeur]);
     }
 }
