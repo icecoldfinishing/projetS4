@@ -13,8 +13,9 @@ class InvestisseurController {
 
     public static function processAjoutFonds() {
         $montant = intval($_POST['valeur']);
+        $date = $_POST['date'];
         $compte = new CompteEntreprise(getDB());
-        $success = $compte->ajouterFonds($montant);
+        $success = $compte->ajouterFonds($montant, $date);
         Flight::redirect('/investisseur/AjoutFonds?success=' . ($success ? 'true' : 'false'));
     }
 }
