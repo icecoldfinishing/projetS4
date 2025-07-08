@@ -181,67 +181,99 @@ require_once __DIR__ . '/../../../ws/config/config.php';
           opt.value = tp.id;
           opt.textContent = `${tp.nom} (${tp.taux} % annuel)`;
           opt.dataset.taux = tp.taux; // ← indispensable
+          opt.dataset.assurance = tp.assurance; // ← assurance stockée
           sel.appendChild(opt);
         });
       });
     }
 
     /* ------------- Simulation côté client ---------- */
-    function simulerPret() {
-      const val = +document.getElementById("valeur").value;
-      const n = +document.getElementById("duree").value;
-      const sel = document.getElementById("id_typePret");
-      const tauxAnnuel = parseFloat(sel.options[sel.selectedIndex].dataset.taux);
+  function simulerPret() {
+    const val = +document.getElementById("valeur").value;
+    const n = +document.getElementById("duree").value;
+    const sel = document.getElementById("id_typePret");
+    const selectedOption = sel.options[sel.selectedIndex];
+    const tauxAnnuel = parseFloat(selectedOption.dataset.taux);
+    const assurance = parseFloat(selectedOption.dataset.assurance) || 0; // Récupération de l'assurance
 
-      if (!val || !n || isNaN(tauxAnnuel)) {
-        alert("Champs manquants");
-        return;
-      }
-      if (val <= 0 || n <= 0) {
-        alert("Valeurs positives requises");
-        return;
-      }
-
-      const r = tauxAnnuel / 100 / 12;
-      const M = +(val * r / (1 - Math.pow(1 + r, -n))).toFixed(2);
-      const ct = +(M * n).toFixed(2);
-      const cc = +(ct - val).toFixed(2);
-
-      afficherResultat({
-        success: true,
-        data: {
-          montant_emprunte: val,
-          taux_interet: tauxAnnuel,
-          duree: n,
-          mensualite: M,
-          cout_total: ct,
-          cout_credit: cc,
-          tableau_amortissement: [] // à remplir si besoin
-        }
-      });
+    if (!val || !n || isNaN(tauxAnnuel)) {
+      alert("Champs manquants");
+      return;
+    }
+    if (val <= 0 || n <= 0) {
+      alert("Valeurs positives requises");
+      return;
     }
 
-    /* ------------- Affichage résultat -------------- */
-    function afficherResultat(res) {
-      const divRes = document.getElementById("resultat-simulation");
-      const divDet = document.getElementById("details-simulation");
-      if (res.success) {
-        const d = res.data;
-        divDet.innerHTML = `
-      <p><strong>Montant emprunté :</strong> ${d.montant_emprunte.toLocaleString()} </p>
-      <p><strong>Taux annuel :</strong> ${d.taux_interet}%</p>
-      <p><strong>Durée :</strong> ${d.duree} mois</p>
-      <p><strong>Mensualité :</strong> ${d.mensualite.toLocaleString()} </p>
-      <p><strong>Coût total :</strong> ${d.cout_total.toLocaleString()} </p>
-      <p><strong>Coût du crédit :</strong> ${d.cout_credit.toLocaleString()} </p>`;
-      } else {
-        divDet.innerHTML = `<div class="alert alert-danger">Erreur : ${res.message}</div>`;
+    // Calcul du taux mensuel
+    const r = tauxAnnuel / 100 / 12;
+    
+    // Calcul de la mensualité de base (sans assurance)
+    const mensualiteBase = val * r / (1 - Math.pow(1 + r, -n));
+    
+    // Calcul du coût de l'assurance mensuelle
+    const coutAssuranceMensuelle = (val * assurance / 100) / 12;
+    
+    // Mensualité totale (capital + intérêts + assurance)
+    const M = +(mensualiteBase + coutAssuranceMensuelle).toFixed(2);
+    
+    // Coût total (mensualité totale * durée)
+    const ct = +(M * n).toFixed(2);
+    
+    // Coût du crédit (coût total - montant emprunté)
+    const cc = +(ct - val).toFixed(2);
+    
+    // Séparation des coûts pour l'affichage
+    const coutInteret = +((mensualiteBase * n) - val).toFixed(2);
+    const coutAssuranceTotal = +(coutAssuranceMensuelle * n).toFixed(2);
+
+    afficherResultat({
+      success: true,
+      data: {
+        montant_emprunte: val,
+        taux_interet: tauxAnnuel,
+        taux_assurance: assurance,
+        duree: n,
+        mensualite: M,
+        mensualite_base: +mensualiteBase.toFixed(2),
+        cout_assurance_mensuelle: +coutAssuranceMensuelle.toFixed(2),
+        cout_total: ct,
+        cout_credit: cc,
+        cout_interet: coutInteret,
+        cout_assurance_total: coutAssuranceTotal,
+        tableau_amortissement: [] // à remplir si besoin
       }
-      divRes.style.display = "block";
-      divRes.scrollIntoView({
-        behavior: "smooth"
-      });
-    }
+    });
+  }
+
+    /* ------------- Affichage résultat amélioré -------------- */
+function afficherResultat(res) {
+  const divRes = document.getElementById("resultat-simulation");
+  const divDet = document.getElementById("details-simulation");
+  if (res.success) {
+    const d = res.data;
+    divDet.innerHTML = `
+      <p><strong>Montant emprunté :</strong> ${d.montant_emprunte.toLocaleString()} €</p>
+      <p><strong>Taux annuel :</strong> ${d.taux_interet}%</p>
+      <p><strong>Taux assurance :</strong> ${d.taux_assurance}%</p>
+      <p><strong>Durée :</strong> ${d.duree} mois</p>
+      <hr>
+      <p><strong>Mensualité base (capital + intérêts) :</strong> ${d.mensualite_base.toLocaleString()} €</p>
+      <p><strong>Assurance mensuelle :</strong> ${d.cout_assurance_mensuelle.toLocaleString()} €</p>
+      <p><strong>Mensualité totale :</strong> ${d.mensualite.toLocaleString()} €</p>
+      <hr>
+      <p><strong>Coût total :</strong> ${d.cout_total.toLocaleString()} €</p>
+      <p><strong>Coût des intérêts :</strong> ${d.cout_interet.toLocaleString()} €</p>
+      <p><strong>Coût de l'assurance :</strong> ${d.cout_assurance_total.toLocaleString()} €</p>
+      <p><strong>Coût total du crédit :</strong> ${d.cout_credit.toLocaleString()} €</p>`;
+  } else {
+    divDet.innerHTML = `<div class="alert alert-danger">Erreur : ${res.message}</div>`;
+  }
+  divRes.style.display = "block";
+  divRes.scrollIntoView({
+    behavior: "smooth"
+  });
+}
 
     /* ------------- Init ---------------------------- */
     document.addEventListener("DOMContentLoaded", chargerTypesPret);
