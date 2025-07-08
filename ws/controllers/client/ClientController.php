@@ -1,6 +1,7 @@
 <?php
 require_once __DIR__ . '/../../models/pret/Pret.php';
 require_once __DIR__ . '/../../models/other/Role.php';
+require_once __DIR__ . '/../../models/etablissement/typePret.php';
 
 class ClientController
 {
@@ -18,6 +19,7 @@ class ClientController
     }
     public static function simulation()
     {
+        $typesPret = TypePret::getAll();
         include __DIR__ . '/../../views/client/simulation.php';
     }
     public static function demande()
