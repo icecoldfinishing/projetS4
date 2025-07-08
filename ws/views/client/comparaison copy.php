@@ -6,8 +6,8 @@ require_once __DIR__ . '/../../../ws/config/config.php';
 $user = isset($_SESSION['user']) ? $_SESSION['user'] : null;
 
 if (!$user) {
-  header('Location: ' . BASE_URL . '/login');
-  exit();
+    header('Location: ' . BASE_URL . '/login');
+    exit();
 }
 ?>
 <!DOCTYPE html>
@@ -18,12 +18,10 @@ if (!$user) {
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-
   <!-- ===============================================-->
   <!--    Document Title-->
   <!-- ===============================================-->
-  <title>Open Enterprise</title>
-
+  <title>Comparaison de Simulations</title>
 
   <!-- ===============================================-->
   <!--    Favicons-->
@@ -36,12 +34,10 @@ if (!$user) {
   <meta name="msapplication-TileImage" content="assets_template/img/favicons/mstile-150x150.png">
   <meta name="theme-color" content="#ffffff">
 
-
   <!-- ===============================================-->
   <!--    Stylesheets-->
   <!-- ===============================================-->
   <link href="<?= BASE_URL ?>/public/assets_template/css/theme.css" rel="stylesheet" />
-
   <link href="vendors/swiper/swiper-bundle.min.css" rel="stylesheet">
   <style>
     .simulation-item {
@@ -50,14 +46,12 @@ if (!$user) {
       margin-bottom: 10px;
       border-radius: 5px;
     }
-
     .comparison-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 20px;
       margin-top: 20px;
     }
-
     .comparison-column {
       border: 1px solid #ccc;
       padding: 15px;
@@ -66,12 +60,8 @@ if (!$user) {
   </style>
 </head>
 
-
 <body data-bs-spy="scroll" data-bs-target="#navbar">
 
-  <!-- ===============================================-->
-  <!--    Main Content-->
-  <!-- ===============================================-->
   <main class="main" id="top">
     <nav class="navbar navbar-expand-xl navbar-light fixed-top px-0 pb-0 mb-2" id="navbar" data-navbar-darken-on-scroll="white">
       <div class="container-fluid align-items-center py-2"><a class="navbar-brand flex-center" href="index.html"><img class="logo" src="<?= BASE_URL ?>/public/assets_template/img/logo.png" alt="open enterprise" /><span class="ms-2 d-none d-sm-block fw-bold">Open Enterprise</span></a>
@@ -89,13 +79,10 @@ if (!$user) {
       </div>
     </nav>
 
-
-    <!-- ============================================-->
-    <!-- <section> begin ============================-->
     <section class="pt-8 py-lg-0" id="hero">
-      <div class="row align-items-center min-vh-lg-50"></div>
       <div class="container-xxl">
         <div class="row align-items-center min-vh-lg-100">
+          <h1>Comparaison de Simulations</h1>
 
           <div id="simulations-list">
             <p>Chargement des simulations...</p>
@@ -108,38 +95,9 @@ if (!$user) {
           </div>
         </div>
       </div>
-      <!-- end of .container-->
-
     </section>
-    <!-- <section> close ============================-->
-    <!-- <section> begin ============================-->
-    <section id="rea">
 
-      <div class="container-xxl">
-        <div class="row align-items-center">
-          <div class="col-lg order-lg-1 text-center"><img class="img-fluid" src="<?= BASE_URL ?>/public/assets_template/img/illustrations/hero2.png" alt="" /></div>
-          <div class="col-lg mt-5 mt-lg-0">
-            <h1 class="lh-sm font-cursive fw-medium display-5">Start an Open Enterprise with :</h1>
-            <p class="mt-4 fs-1">ETU003246 Sanda</p>
-            <p class="mt-4 fs-1">ETU003295 Rohy</p>
-            <p class="mt-4 fs-1">ETU003660 Fenitra</p>
-            <button class="btn btn-success mt-4">Request early access</button>
-          </div>
-        </div>
-      </div>
-      <!-- end of .container-->
-
-    </section>
-    <!-- <section> close ============================-->
-    <!-- ============================================-->
-
-
-
-
-    <!-- ============================================-->
-    <!-- <section> begin ============================-->
     <section class="py-4">
-
       <div class="container-xxl">
         <div class="row justify-content-center align-items-center">
           <div class="col-lg-6 text-sm-center text-lg-start">
@@ -150,20 +108,8 @@ if (!$user) {
           </div>
         </div>
       </div>
-      <!-- end of .container-->
-
     </section>
-    <!-- <section> close ============================-->
-    <!-- ============================================-->
-
-
   </main>
-  <!-- ===============================================-->
-  <!--    End of Main Content-->
-  <!-- ===============================================-->
-
-
-
 
   <script>
     const apiBase = "http://localhost<?= BASE_URL ?>";
@@ -253,7 +199,7 @@ if (!$user) {
       }
 
       function formatValue(value, isCurrency = true) {
-        return isCurrency ? `${value.toLocaleString()} Ar` : value;
+          return isCurrency ? `${value.toLocaleString()} Ar` : value;
       }
 
       comparisonResultsDiv.innerHTML = `
@@ -289,13 +235,11 @@ if (!$user) {
       document.getElementById('compare-button').addEventListener('click', compareSimulations);
     });
   </script>
-  <!-- ===============================================-->
-  <!--    JavaScripts-->
-  <!-- ===============================================-->
+
   <script src="vendors/@popperjs/popper.min.js"></script>
   <script src="vendors/bootstrap/bootstrap.min.js"></script>
   <script src="vendors/is/is.min.js"></script>
-  <script src="vendors/swiper/swiper-bundle.min.js"> </script>
+  <script src="vendors/swiper/swiper-bundle.min.js"></script>
   <script src="https://polyfill.io/v3/polyfill.min.js?features=window.scroll"></script>
   <script src="<?= BASE_URL ?>/public/assets_template/js/theme.js"></script>
 
