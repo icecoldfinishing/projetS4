@@ -24,8 +24,7 @@ public static function getByMonth($data)
     ]);
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
-public static function getInteretParPeriode(int $mDebut, int $aDebut,
-                                            int $mFin,  int $aFin): array
+public static function getInteretParPeriode(int $mDebut, int $aDebut, int $mFin, int $aFin): array
 {
     $db = getDB();
 
@@ -33,29 +32,85 @@ public static function getInteretParPeriode(int $mDebut, int $aDebut,
     $dateEnd   = date('Y-m-t', strtotime(sprintf('%04d-%02d-01', $aFin, $mFin)));
 
     $sql = "
-      SELECT  YEAR(r.dateRemboursement)  AS annee,
-              MONTH(r.dateRemboursement) AS mois,
-              ROUND(
-                  SUM(p.valeur * tp.taux / 100 / 12)
-              , 2)                        AS interet
-      FROM    remboursement r
-      JOIN    pret       p  ON r.id_pret     = p.id
-      JOIN    typePret   tp ON p.id_typePret = tp.id
-      WHERE   r.dateRemboursement BETWEEN ? AND ?
-      GROUP BY annee, mois
-      ORDER BY annee, mois
+        SELECT r.dateRemboursement, r.mensualite,
+               p.valeur AS principal, p.duree, p.delai, p.assurance AS assurance_mode,
+               tp.taux, tp.assurance AS taux_assurance,
+               p.dateDebut
+        FROM remboursement r
+        JOIN pret p ON r.id_pret = p.id
+        JOIN typePret tp ON p.id_typePret = tp.id
+        WHERE r.dateRemboursement BETWEEN ? AND ?
+        ORDER BY r.dateRemboursement
     ";
 
     $stmt = $db->prepare($sql);
     $stmt->execute([$dateStart, $dateEnd]);
     $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-    /* total global */
+    $interetsByMonth = [];
     $total = 0;
-    foreach ($rows as $r) $total += $r['interet'];
+
+    foreach ($rows as $r) {
+        $dateRemboursement = new DateTime($r['dateRemboursement']);
+        $annee = (int)$dateRemboursement->format('Y');
+        $mois = (int)$dateRemboursement->format('m');
+
+        $P = (float)$r['principal'];
+        $n = (int)$r['duree'];
+        $rTaux = (float)$r['taux'] / 100 / 12; // taux mensuel
+        $assuranceMode = (int)$r['assurance_mode']; // 1 = unique, 2 = mensuelle
+        $tauxAssurance = (float)$r['taux_assurance']; // en %
+        $mensualite = (float)$r['mensualite'];
+
+        $dateDebut = new DateTime($r['dateDebut']);
+        $diffMonths = ($annee - (int)$dateDebut->format('Y')) * 12 + ($mois - (int)$dateDebut->format('m')) + 1;
+
+        if ($diffMonths < 1 || $diffMonths > $n) {
+            continue;
+        }
+
+        // Intérêt fixe basé sur capital de base
+        $interetMensuel = round($P * $rTaux, 2);
+
+        // Assurance
+        $assuranceMensuelle = 0;
+        if ($assuranceMode === 1) {
+            // Assurance payée une fois, au premier mois seulement
+            if ($diffMonths === 1) {
+                $assuranceMensuelle = round($P * $tauxAssurance / 100, 2);
+            }
+        } elseif ($assuranceMode === 2) {
+            $assuranceMensuelle = round($P * $tauxAssurance / 100 / $n, 2);
+        }
+
+        $interetMensuel += $assuranceMensuelle;
+
+        $key = sprintf('%04d-%02d', $annee, $mois);
+        if (!isset($interetsByMonth[$key])) {
+            $interetsByMonth[$key] = 0;
+        }
+        $interetsByMonth[$key] += $interetMensuel;
+        $total += $interetMensuel;
+    }
+
+    $resultRows = [];
+    foreach ($interetsByMonth as $key => $interet) {
+        list($annee, $mois) = explode('-', $key);
+        $resultRows[] = [
+            'annee' => (int)$annee,
+            'mois' => (int)$mois,
+            'interet' => round($interet, 2),
+        ];
+    }
+
+    usort($resultRows, function($a, $b) {
+        return $a['annee'] === $b['annee']
+            ? $a['mois'] <=> $b['mois']
+            : $a['annee'] <=> $b['annee'];
+    });
 
     return [
-        'mois'  => $rows,        // tableau [{annee, mois, interet}, …]
+        'mois' => $resultRows,
         'total' => round($total, 2)
     ];
 }

@@ -3,6 +3,7 @@ require_once __DIR__ . '/../controllers/EtudiantController.php';
 require_once __DIR__ . '/../controllers/other/HelloController.php';
 require_once __DIR__ . '/../controllers/other/LoginController.php';
 require_once __DIR__ . '/../controllers/client/ClientController.php';
+require_once __DIR__ . '/../controllers/client/SimulationController.php';
 require_once __DIR__ . '/../controllers/client/PdfController.php';
 require_once __DIR__ . '/../controllers/etablissement/EtablissementController.php';
 require_once __DIR__ . '/../controllers/etablissement/TypePretController.php';
@@ -57,5 +58,9 @@ Flight::route('POST /investisseur/AjoutFonds', ['InvestisseurController', 'proce
 Flight::route('GET /login', ['LoginController', 'afficher']);
 Flight::route('GET /logout', ['LoginController', 'afficher']);
 Flight::route('POST /login', ['LoginController', 'connecter']);
+
+//Simulation
+// Simulation
+Flight::route('POST /simulation', ['SimulationController', 'save']);
 
 

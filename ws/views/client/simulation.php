@@ -1,6 +1,7 @@
 <?php
 session_start();
 require_once __DIR__ . '/../../../ws/config/config.php';
+require_once __DIR__ . '/../../../ws/models/other/SImulation.php';
 
 
 ?>
