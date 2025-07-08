@@ -25,7 +25,7 @@ INSERT INTO typePret (nom, taux, assurance, duree) VALUES
 ('Prêt travaux', 3.75, 1.00, 72);
 
 
-INSERT INTO compteEntreprise (valeur) VALUES (20000000);
+INSERT INTO compteEntreprise (valeur,date) VALUES (20000000,'2025-01-09');
 
 INSERT INTO pret (id_user, id_statut, valeur, dateDebut, duree, delai, id_typePret, commentaire, assurance) VALUES
 (3, 1, 1500000, '2025-07-16', 12, 2, 1, 'Prêt pour projet A', 1),
