@@ -24,14 +24,20 @@ class SimulationController
         }
     }
 
-    // Récupère toutes les simulations
-    public static function getAll()
+    // Récupère les simulations pour l'utilisateur connecté
+    public static function getSimulationsForUser()
     {
+        session_start();
+        if (!isset($_SESSION['user']['id'])) {
+            Flight::json(['success' => false, 'message' => 'Utilisateur non connecté'], 401);
+            return;
+        }
+
         try {
-            $simulations = Simulation::getAll();
+            $simulations = Simulation::getByUserId($_SESSION['user']['id']);
             Flight::json($simulations);
         } catch (Exception $e) {
-            Flight::json(['success' => false, 'message' => 'Erreur lors de la récupération : ' . $e->getMessage()]);
+            Flight::json(['success' => false, 'message' => 'Erreur lors de la récupération : ' . $e->getMessage()], 500);
         }
     }
 }

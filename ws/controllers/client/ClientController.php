@@ -49,6 +49,11 @@ class ClientController
         include __DIR__ . '/../../views/client/mesPret.php';
     }
 
+    public static function comparaison()
+    {
+        include __DIR__ . '/../../views/client/comparaison.php';
+    }
+
 
 
     // Traite la soumission du formulaire (POST)

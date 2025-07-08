@@ -47,7 +47,7 @@ CREATE TABLE pret (
     id_user INT,
     id_statut INT,
     valeur INT NOT NULL,
-    dateDebut DATE NOT NULL,
+    dateDebut DATE NOT NULL, 
     duree INT NOT NULL,
     delai INT,
     id_typePret INT,
