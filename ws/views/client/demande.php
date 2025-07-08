@@ -115,7 +115,13 @@ if (isset($_SESSION['success'])) {
                 <?php endforeach; ?>
               </select>
             </div>
-
+            <label for="optionAssurence">Option de payement de l'assurance</label>
+            <div>
+              <select name="assurance" id="">
+                <option value="1">Payer en un fois</option>
+                <option value="2">Payer en plusieur fois</option>
+              </select>
+            </div>
             <div>
               <textarea name="commentaire" id="commentaire" placeholder="Ajoutez un commentaire..." rows="4" cols="50"></textarea>
             </div>

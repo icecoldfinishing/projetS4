@@ -51,6 +51,7 @@ CREATE TABLE pret (
     delai INT,
     id_typePret INT,
     commentaire TEXT,
+    assurance INT,
     FOREIGN KEY (id_user) REFERENCES user(id),
     FOREIGN KEY (id_statut) REFERENCES statut(id),
     FOREIGN KEY (id_typePret) REFERENCES typePret(id)
