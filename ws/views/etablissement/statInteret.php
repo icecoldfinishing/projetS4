@@ -1,3 +1,6 @@
+<?php
+require_once __DIR__ . '/../../../ws/config/config.php';
+?>
 <!DOCTYPE html>
 <html lang="en-US" dir="ltr">
 
