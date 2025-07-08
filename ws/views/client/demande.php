@@ -118,6 +118,14 @@ if (isset($_SESSION['success'])) {
             <div>
               <textarea name="commentaire" id="commentaire" placeholder="Ajoutez un commentaire..." rows="4" cols="50"></textarea>
             </div>
+            <div>
+              <label for="assurance">Assurance (Nom de l'objet)</label>
+              <input type="text" name="assurance" id="assurance" placeholder="Ex: Voiture, Maison, Bijoux">
+            </div>
+            <div>
+              <label for="valeurAssurance">Valeur assurance (%)</label>
+              <input type="number" name="valeurAssurance" id="valeurAssurance" step="0.01" min="0" max="100">
+            </div>
 
             <button type="submit">Faire la demande de prêt</button>
           </form>
