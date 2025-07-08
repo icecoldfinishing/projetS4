@@ -191,30 +191,41 @@ if (!$user) {
 
       const comparisonResultsDiv = document.getElementById('comparison-results');
       comparisonResultsDiv.style.display = 'grid';
+
+      function getComparisonClass(val1, val2) {
+        if (val1 < val2) return 'text-success fw-bold';
+        if (val1 > val2) return 'text-danger';
+        return '';
+      }
+
+      function formatValue(value, isCurrency = true) {
+          return isCurrency ? `${value.toLocaleString()} Ar` : value;
+      }
+
       comparisonResultsDiv.innerHTML = `
         <div class="comparison-column">
           <h3>Simulation #${sim1.id}</h3>
-          <p><strong>Montant:</strong> ${sim1.montant.toLocaleString()}</p>
+          <p><strong>Montant:</strong> ${formatValue(sim1.montant)}</p>
           <p><strong>Durée:</strong> ${sim1.duree} mois</p>
-          <p><strong>Taux:</strong> ${sim1.taux}%</p>
-          <p><strong>Taux Assurance:</strong> ${sim1.taux_assurance}%</p>
-          <p><strong>Mensualité:</strong> ${sim1.mensualite.toLocaleString()}</p>
-          <p><strong>Coût Total:</strong> ${sim1.cout_total.toLocaleString()}</p>
-          <p><strong>Coût Intérêt:</strong> ${sim1.cout_interet.toLocaleString()}</p>
-          <p><strong>Coût Assurance Total:</strong> ${sim1.cout_assurance_total.toLocaleString()}</p>
-          <p><strong>Coût Crédit:</strong> ${sim1.cout_credit.toLocaleString()}</p>
+          <p><strong>Taux:</strong> <span class="${getComparisonClass(sim1.taux, sim2.taux)}">${sim1.taux}%</span></p>
+          <p><strong>Taux Assurance:</strong> <span class="${getComparisonClass(sim1.taux_assurance, sim2.taux_assurance)}">${sim1.taux_assurance}%</span></p>
+          <p><strong>Mensualité:</strong> <span class="${getComparisonClass(sim1.mensualite, sim2.mensualite)}">${formatValue(sim1.mensualite)}</span></p>
+          <p><strong>Coût Total:</strong> <span class="${getComparisonClass(sim1.cout_total, sim2.cout_total)}">${formatValue(sim1.cout_total)}</span></p>
+          <p><strong>Coût Intérêt:</strong> <span class="${getComparisonClass(sim1.cout_interet, sim2.cout_interet)}">${formatValue(sim1.cout_interet)}</span></p>
+          <p><strong>Coût Assurance Total:</strong> <span class="${getComparisonClass(sim1.cout_assurance_total, sim2.cout_assurance_total)}">${formatValue(sim1.cout_assurance_total)}</span></p>
+          <p><strong>Coût Crédit:</strong> <span class="${getComparisonClass(sim1.cout_credit, sim2.cout_credit)}">${formatValue(sim1.cout_credit)}</span></p>
         </div>
         <div class="comparison-column">
           <h3>Simulation #${sim2.id}</h3>
-          <p><strong>Montant:</strong> ${sim2.montant.toLocaleString()}</p>
+          <p><strong>Montant:</strong> ${formatValue(sim2.montant)}</p>
           <p><strong>Durée:</strong> ${sim2.duree} mois</p>
-          <p><strong>Taux:</strong> ${sim2.taux}%</p>
-          <p><strong>Taux Assurance:</strong> ${sim2.taux_assurance}%</p>
-          <p><strong>Mensualité:</strong> ${sim2.mensualite.toLocaleString()}</p>
-          <p><strong>Coût Total:</strong> ${sim2.cout_total.toLocaleString()}</p>
-          <p><strong>Coût Intérêt:</strong> ${sim2.cout_interet.toLocaleString()}</p>
-          <p><strong>Coût Assurance Total:</strong> ${sim2.cout_assurance_total.toLocaleString()}</p>
-          <p><strong>Coût Crédit:</strong> ${sim2.cout_credit.toLocaleString()}</p>
+          <p><strong>Taux:</strong> <span class="${getComparisonClass(sim2.taux, sim1.taux)}">${sim2.taux}%</span></p>
+          <p><strong>Taux Assurance:</strong> <span class="${getComparisonClass(sim2.taux_assurance, sim1.taux_assurance)}">${sim2.taux_assurance}%</span></p>
+          <p><strong>Mensualité:</strong> <span class="${getComparisonClass(sim2.mensualite, sim1.mensualite)}">${formatValue(sim2.mensualite)}</span></p>
+          <p><strong>Coût Total:</strong> <span class="${getComparisonClass(sim2.cout_total, sim1.cout_total)}">${formatValue(sim2.cout_total)}</span></p>
+          <p><strong>Coût Intérêt:</strong> <span class="${getComparisonClass(sim2.cout_interet, sim1.cout_interet)}">${formatValue(sim2.cout_interet)}</span></p>
+          <p><strong>Coût Assurance Total:</strong> <span class="${getComparisonClass(sim2.cout_assurance_total, sim1.cout_assurance_total)}">${formatValue(sim2.cout_assurance_total)}</span></p>
+          <p><strong>Coût Crédit:</strong> <span class="${getComparisonClass(sim2.cout_credit, sim1.cout_credit)}">${formatValue(sim2.cout_credit)}</span></p>
         </div>
       `;
     }
