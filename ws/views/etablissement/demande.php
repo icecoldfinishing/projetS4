@@ -102,6 +102,7 @@ require_once __DIR__ . '/../../../ws/config/config.php';
                     <td><?= htmlspecialchars($pret['delai']) ?></td> <!-- Nouvelle cellule -->
                     <td><?= htmlspecialchars(TypePret::getNomById($pret['id_typePret']) )?></td>
                     <td><?= nl2br(htmlspecialchars($pret['commentaire'])) ?></td>
+                    <td><?= htmlspecialchars($pret['assurance']) ?></td> 
                     <td>En attente</td>
                     <td>
                       <form method="post" action="<?= BASE_URL ?>/pret/decision">
