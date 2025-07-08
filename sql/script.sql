@@ -96,3 +96,13 @@ CREATE TABLE annuite (
     valeurNette DECIMAL(10,2) NOT NULL,
     FOREIGN KEY (id_pret) REFERENCES pret(id)
 );
+
+CREATE TABLE simulation(
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    montant INT,
+    taux INT,
+    duree INT,
+    mensualite  DECIMAL(10,2),
+    total  DECIMAL(10,2),
+    credit  DECIMAL(10,2)
+);
