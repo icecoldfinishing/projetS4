@@ -1,6 +1,7 @@
 <?php
 session_start();
 require_once __DIR__ . '/../../../ws/config/config.php';
+require_once __DIR__ . '/../../../ws/models/other/SImulation.php';
 
 
 ?>
@@ -206,6 +207,7 @@ require_once __DIR__ . '/../../../ws/config/config.php';
       const ct = +(M * n).toFixed(2);
       const cc = +(ct - val).toFixed(2);
 
+      // Afficher le résultat
       afficherResultat({
         success: true,
         data: {
@@ -214,11 +216,29 @@ require_once __DIR__ . '/../../../ws/config/config.php';
           duree: n,
           mensualite: M,
           cout_total: ct,
-          cout_credit: cc,
-          tableau_amortissement: [] // à remplir si besoin
+          cout_credit: cc
+        }
+      });
+
+      // 🟢 Enregistrer en base via AJAX POST
+      const dataToSave = {
+        montant: val,
+        taux: tauxAnnuel,
+        duree: n,
+        mensualite: M,
+        total: ct,
+        credit: cc
+      };
+
+      ajax("POST", "/simulation", dataToSave, res => {
+        if (res.success) {
+          console.log("✅ Simulation enregistrée !");
+        } else {
+          console.warn("❌ Erreur d’enregistrement :", res.message);
         }
       });
     }
+
 
     /* ------------- Affichage résultat -------------- */
     function afficherResultat(res) {
