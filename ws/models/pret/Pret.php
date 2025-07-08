@@ -84,5 +84,16 @@ class Pret {
         $stmt = $db->prepare("UPDATE pret SET id_statut = ? WHERE id = ?");
         $stmt->execute([$nouveauStatut, $id]);
     }
+    // Retourne un texte explicatif pour l'assurance
+    public static function getAssuranceTexte($assurance) {
+        if ($assurance == 1) {
+            return "Rembourse une fois";
+        } elseif ($assurance == 2) {
+            return "Rembourse plusieurs fois";
+        } else {
+            return "Inconnu";
+        }
+    }
+
 
 }

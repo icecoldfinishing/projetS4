@@ -94,6 +94,7 @@ class PdfController
     {
         
         $nomUtilisateur = User::getNom($pret['id_user']);
+        $assurance = Pret::getAssuranceTexte($pret['assurance']);
         // Titre section
         $pdf->SetFont('Arial', 'B', 14);
         $pdf->SetTextColor(52, 73, 94);
@@ -101,7 +102,7 @@ class PdfController
         $pdf->Ln(5);
         
         // Formatage des données d'assurance
-        $assuranceTexte = !empty($pret['Assurance']) ? $pret['Assurance'] : 'Non souscrite';
+        $assuranceTexte = !empty($pret['assurance']) ? $pret['assurance'] : 'Non souscrite';
         $valeurAssuranceTexte = !empty($pret['valeurAssurance']) ? 
             number_format($pret['valeurAssurance'], 2, ',', ' ') . ' Ariary' : 'N/A';
         
@@ -114,8 +115,7 @@ class PdfController
             ['Durée du prêt', $pret['duree'] . ' mois'],
             ['Délai de remboursement', $pret['delai']],
             ['Type de prêt', $nomTypePret],
-            ['Assurance', $assuranceTexte],
-            ['Valeur Assurance', $valeurAssuranceTexte],
+            ['Assurance', $assurance],
             ['Statut', $statutInfo['texte']]
         ];
         
