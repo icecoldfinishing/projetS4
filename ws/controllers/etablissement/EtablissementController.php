@@ -13,6 +13,10 @@ class EtablissementController {
         include __DIR__ . '/../../views/etablissement/statInteret.php';
     }
 
+    public static function view2() {
+        include __DIR__ . '/../../views/etablissement/StatSolde.php';
+    }
+
     public static function demandePret()
     {
         session_start();
@@ -47,6 +51,26 @@ class EtablissementController {
         $d = Flight::request()->data;   
 
         $data = StatInteret::getInteretParPeriode(
+            (int)$d->moisDebut,
+            (int)$d->anneeDebut,
+            (int)$d->moisFin,
+            (int)$d->anneeFin
+        );
+
+        Flight::json($data);   
+    }
+
+    public static function soldeParPeriode()
+    {
+        session_start();
+        if (!isset($_SESSION['user'])) {
+            Flight::halt(401, 'Non authentifié');
+            return;
+        }
+
+        $d = Flight::request()->data;   
+
+        $data = CompteEntreprise::getSoldeParMois(
             (int)$d->moisDebut,
             (int)$d->anneeDebut,
             (int)$d->moisFin,

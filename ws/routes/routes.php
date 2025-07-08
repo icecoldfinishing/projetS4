@@ -51,7 +51,9 @@ Flight::route('GET /etablissement', ['EtablissementController', 'afficher']);
 Flight::route('GET /demandePret', ['EtablissementController', 'demandePret']);
 Flight::route('POST /pret/decision', ['EtablissementController', 'decision']);
 Flight::route('GET /stat', ['EtablissementController', 'view']);
+Flight::route('GET /stats', ['EtablissementController', 'view2']);
 Flight::route('POST /stat/interets', ['EtablissementController', 'interetsParPeriode']);
+Flight::route('POST /stat/solde', ['EtablissementController', 'soldeParPeriode']);
 
 
 
