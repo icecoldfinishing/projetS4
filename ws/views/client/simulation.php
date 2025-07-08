@@ -228,23 +228,30 @@ require_once __DIR__ . '/../../../ws/config/config.php';
         tableau_amortissement: []
       };
 
-      // Affiche à l'écran
+      // Affichage à l'écran
       afficherResultat({
         success: true,
         data: resultData
       });
 
-      // Sauvegarde via API
+      // Appel API pour sauvegarde en base
       ajax("POST", "/simulation/save", {
         montant: val,
         taux: tauxAnnuel,
+        taux_assurance: assurance,
         duree: n,
+        mensualite_base: mensualiteBase.toFixed(2),
+        cout_assurance_mensuelle: coutAssuranceMensuelle.toFixed(2),
         mensualite: M,
-        total: ct,
-        credit: cc
+        cout_total: ct,
+        cout_interet: coutInteret,
+        cout_assurance_total: coutAssuranceTotal,
+        cout_credit: cc
       }, res => {
         if (!res.success) {
-          alert("Erreur lors de l'enregistrement de la simulation.");
+          alert("❌ Erreur lors de l'enregistrement de la simulation : " + res.message);
+        } else {
+          console.log("✅ Simulation enregistrée.");
         }
       });
     }
