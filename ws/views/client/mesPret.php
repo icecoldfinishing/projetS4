@@ -53,6 +53,7 @@ require_once __DIR__ . '/../../../ws/config/config.php';
             <li class="nav-item ps-0 ps-xl-4 ms-2"><a class="nav-link fs-2 fw-medium" href="<?php echo BASE_URL; ?>/demande">Faire demande de pret </a></li>
               <li class=" nav-item ps-0 ps-xl-4 ms-2"><a class="nav-link fs-2 fw-medium" href="<?php echo BASE_URL; ?>/MesPret">Mes pret</a></li>
               <li class="nav-item ps-0 ps-xl-4 ms-2"><a class="nav-link fs-2 fw-medium" href="<?php echo BASE_URL; ?>/simulation">Simulation</a></li>
+              <li class="nav-item ps-0 ps-xl-4 ms-2"><a class="nav-link fs-2 fw-medium" href="<?php echo BASE_URL; ?>/comparaison">Comparer des simulation</a></li>
             <li class="nav-item ps-0 ps-xl-4 ms-2"><a class="nav-link fs-2 fw-medium" href="<?php echo BASE_URL; ?>/login">Logout</a></li>
           </ul>
         </div>
@@ -80,6 +81,7 @@ require_once __DIR__ . '/../../../ws/config/config.php';
                   <th>Type de prêt</th>
                   <th>Commentaire</th>
                   <th>Assurance</th>
+                  <th>Valeur Assurance</th>
                   <th>Statut</th>
                   <th>Actions</th>
                 </tr>
@@ -96,6 +98,7 @@ require_once __DIR__ . '/../../../ws/config/config.php';
                     <td><?= htmlspecialchars($pret['id_typePret']) ?></td>
                     <td><?= nl2br(htmlspecialchars($pret['commentaire'])) ?></td>
                     <td><?= htmlspecialchars(Pret::getAssuranceTexte($pret['assurance'])) ?></td> 
+                    <td><?= htmlspecialchars(TypePret::getAssuranceById($pret['assurance'])) ?></td> 
                     <td>accepte</td>
                     <td>
                       <form method="post" action="<?= BASE_URL ?>/pret/export-pdf">

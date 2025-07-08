@@ -3,6 +3,7 @@ require_once __DIR__ . '/../controllers/EtudiantController.php';
 require_once __DIR__ . '/../controllers/other/HelloController.php';
 require_once __DIR__ . '/../controllers/other/LoginController.php';
 require_once __DIR__ . '/../controllers/client/ClientController.php';
+require_once __DIR__ . '/../controllers/client/SimulationController.php';
 require_once __DIR__ . '/../controllers/client/PdfController.php';
 require_once __DIR__ . '/../controllers/etablissement/EtablissementController.php';
 require_once __DIR__ . '/../controllers/etablissement/TypePretController.php';
@@ -36,7 +37,13 @@ Flight::route('POST /client/create', ['ClientController', 'store']);
 Flight::route('GET /client/create', ['ClientController', 'create']);
 Flight::route('POST /pret/demande', ['ClientController', 'storePret']);
 Flight::route('GET /mesPret', ['ClientController', 'mesPret']);
+Flight::route('GET /comparaison', ['ClientController', 'comparaison']);
 Flight::route('POST /pret/export-pdf', ['PdfController', 'exportPretPdf']);
+
+// Simulation
+Flight::route('POST /simulation/save', ['SimulationController', 'save']);
+Flight::route('GET /api/simulations', ['SimulationController', 'getSimulationsForUser']);
+
 
 
 // Etablissement 

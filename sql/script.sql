@@ -47,7 +47,7 @@ CREATE TABLE pret (
     id_user INT,
     id_statut INT,
     valeur INT NOT NULL,
-    dateDebut DATE NOT NULL,
+    dateDebut DATE NOT NULL, 
     duree INT NOT NULL,
     delai INT,
     id_typePret INT,
@@ -70,10 +70,10 @@ CREATE TABLE remboursement (
     FOREIGN KEY (id_pret) REFERENCES pret(id)
 );
 
-DROP TABLE IF EXISTS compteEntreprise;
 CREATE TABLE compteEntreprise (
     id INT PRIMARY KEY AUTO_INCREMENT,
-    valeur INT NOT NULL
+    valeur INT NOT NULL,
+    date DATE
 );
 
 CREATE TABLE fondsEtablissement (
@@ -95,4 +95,23 @@ CREATE TABLE annuite (
     annuite DECIMAL(10,2) NOT NULL,
     valeurNette DECIMAL(10,2) NOT NULL,
     FOREIGN KEY (id_pret) REFERENCES pret(id)
+);
+
+
+
+CREATE TABLE simulation (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    id_user INT,
+    montant INT,
+    taux DECIMAL(5,2),
+    taux_assurance DECIMAL(5,2),
+    duree INT,
+    mensualite_base DECIMAL(10,2),
+    cout_assurance_mensuelle DECIMAL(10,2),
+    mensualite DECIMAL(10,2),
+    cout_total DECIMAL(10,2),
+    cout_interet DECIMAL(10,2),
+    cout_assurance_total DECIMAL(10,2),
+    cout_credit DECIMAL(10,2),
+    FOREIGN KEY (id_user) REFERENCES user(id)
 );

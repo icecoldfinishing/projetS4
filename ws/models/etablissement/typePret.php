@@ -55,4 +55,14 @@ class TypePret
         return $result ? $result['nom'] : null;
     }
 
+    public static function getAssuranceById($id)
+    {
+        $db = getDB();
+        $stmt = $db->prepare("SELECT assurance FROM typePret WHERE id = ?");
+        $stmt->execute([$id]);
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $result ? $result['assurance'] : null;
+    }
+
+
 }

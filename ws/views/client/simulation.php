@@ -56,6 +56,7 @@ require_once __DIR__ . '/../../../ws/config/config.php';
             <li class="nav-item ps-0 ps-xl-4 ms-2"><a class="nav-link fs-2 fw-medium" href="<?php echo BASE_URL; ?>/demande"">Faire demande de pret </a></li>
               <li class=" nav-item ps-0 ps-xl-4 ms-2"><a class="nav-link fs-2 fw-medium" href="<?php echo BASE_URL; ?>/MesPret">Mes pret</a></li>
             <li class="nav-item ps-0 ps-xl-4 ms-2"><a class="nav-link fs-2 fw-medium" href="<?php echo BASE_URL; ?>/simulation">Simulation</a></li>
+            <li class="nav-item ps-0 ps-xl-4 ms-2"><a class="nav-link fs-2 fw-medium" href="<?php echo BASE_URL; ?>/comparaison">Comparer des simulation</a></li>
             <li class="nav-item ps-0 ps-xl-4 ms-2"><a class="nav-link fs-2 fw-medium" href="<?php echo BASE_URL; ?>/login">Logout</a></li>
           </ul>
         </div>
@@ -180,17 +181,19 @@ require_once __DIR__ . '/../../../ws/config/config.php';
           opt.value = tp.id;
           opt.textContent = `${tp.nom} (${tp.taux} % annuel)`;
           opt.dataset.taux = tp.taux; // ← indispensable
+          opt.dataset.assurance = tp.assurance; // ← assurance stockée
           sel.appendChild(opt);
         });
       });
     }
 
-    /* ------------- Simulation côté client ---------- */
     function simulerPret() {
       const val = +document.getElementById("valeur").value;
       const n = +document.getElementById("duree").value;
       const sel = document.getElementById("id_typePret");
-      const tauxAnnuel = parseFloat(sel.options[sel.selectedIndex].dataset.taux);
+      const selectedOption = sel.options[sel.selectedIndex];
+      const tauxAnnuel = parseFloat(selectedOption.dataset.taux);
+      const assurance = parseFloat(selectedOption.dataset.assurance) || 0;
 
       if (!val || !n || isNaN(tauxAnnuel)) {
         alert("Champs manquants");
@@ -202,39 +205,79 @@ require_once __DIR__ . '/../../../ws/config/config.php';
       }
 
       const r = tauxAnnuel / 100 / 12;
-      const M = +(val * r / (1 - Math.pow(1 + r, -n))).toFixed(2);
+      const mensualiteBase = val * r / (1 - Math.pow(1 + r, -n));
+      const coutAssuranceMensuelle = (val * assurance / 100) / 12;
+      const M = +(mensualiteBase + coutAssuranceMensuelle).toFixed(2);
       const ct = +(M * n).toFixed(2);
       const cc = +(ct - val).toFixed(2);
+      const coutInteret = +((mensualiteBase * n) - val).toFixed(2);
+      const coutAssuranceTotal = +(coutAssuranceMensuelle * n).toFixed(2);
 
+      const resultData = {
+        montant_emprunte: val,
+        taux_interet: tauxAnnuel,
+        taux_assurance: assurance,
+        duree: n,
+        mensualite: M,
+        mensualite_base: +mensualiteBase.toFixed(2),
+        cout_assurance_mensuelle: +coutAssuranceMensuelle.toFixed(2),
+        cout_total: ct,
+        cout_credit: cc,
+        cout_interet: coutInteret,
+        cout_assurance_total: coutAssuranceTotal,
+        tableau_amortissement: []
+      };
+
+      // Affichage à l'écran
       afficherResultat({
         success: true,
-        data: {
-          montant_emprunte: val,
-          taux_interet: tauxAnnuel,
-          duree: n,
-          mensualite: M,
-          cout_total: ct,
-          cout_credit: cc,
-          tableau_amortissement: [] // à remplir si besoin
+        data: resultData
+      });
+
+      // Appel API pour sauvegarde en base
+      ajax("POST", "/simulation/save", {
+        montant: val,
+        taux: tauxAnnuel,
+        taux_assurance: assurance,
+        duree: n,
+        mensualite_base: mensualiteBase.toFixed(2),
+        cout_assurance_mensuelle: coutAssuranceMensuelle.toFixed(2),
+        mensualite: M,
+        cout_total: ct,
+        cout_interet: coutInteret,
+        cout_assurance_total: coutAssuranceTotal,
+        cout_credit: cc
+      }, res => {
+        if (!res.success) {
+          alert("❌ Erreur lors de l'enregistrement de la simulation : " + res.message);
+        } else {
+          console.log("✅ Simulation enregistrée.");
         }
       });
     }
 
-    /* ------------- Affichage résultat -------------- */
+    /* ------------- Affichage résultat amélioré -------------- */
     function afficherResultat(res) {
       const divRes = document.getElementById("resultat-simulation");
       const divDet = document.getElementById("details-simulation");
       if (res.success) {
         const d = res.data;
         divDet.innerHTML = `
-      <p><strong>Montant emprunté :</strong> ${d.montant_emprunte.toLocaleString()} </p>
-      <p><strong>Taux annuel :</strong> ${d.taux_interet}%</p>
-      <p><strong>Durée :</strong> ${d.duree} mois</p>
-      <p><strong>Mensualité :</strong> ${d.mensualite.toLocaleString()} </p>
-      <p><strong>Coût total :</strong> ${d.cout_total.toLocaleString()} </p>
-      <p><strong>Coût du crédit :</strong> ${d.cout_credit.toLocaleString()} </p>`;
+      <p><strong>Montant emprunté :</strong> ${d.montant_emprunte.toLocaleString()} Ar</p>
+      <p><strong>Taux annuel :</strong> ${d.taux_interet}%</p>
+      <p><strong>Taux assurance :</strong> ${d.taux_assurance}%</p>
+      <p><strong>Durée :</strong> ${d.duree} mois</p>
+      <hr>
+      <p><strong>Mensualité base (capital + intérêts) :</strong> ${d.mensualite_base.toLocaleString()} Ar</p>
+      <p><strong>Assurance mensuelle :</strong> ${d.cout_assurance_mensuelle.toLocaleString()} Ar</p>
+      <p><strong>Mensualité totale :</strong> ${d.mensualite.toLocaleString()} Ar</p>
+      <hr>
+      <p><strong>Coût total :</strong> ${d.cout_total.toLocaleString()} Ar</p>
+      <p><strong>Coût des intérêts :</strong> ${d.cout_interet.toLocaleString()} Ar</p>
+      <p><strong>Coût de l'assurance :</strong> ${d.cout_assurance_total.toLocaleString()} Ar</p>
+      <p><strong>Coût total du crédit :</strong> ${d.cout_credit.toLocaleString()} Ar</p>`;
       } else {
-        divDet.innerHTML = `<div class="alert alert-danger">Erreur : ${res.message}</div>`;
+        divDet.innerHTML = `<div class="alert alert-danger">Erreur : ${res.message}</div>`;
       }
       divRes.style.display = "block";
       divRes.scrollIntoView({

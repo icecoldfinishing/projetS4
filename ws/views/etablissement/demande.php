@@ -66,6 +66,7 @@ require_once __DIR__ . '/../../../ws/config/config.php';
 
       <div class="container-xxl">
         <div class="row align-items-center min-vh-lg-100">
+          <p>Solde actuel : 200000AR</p>
           <?php if (isset($errorMessage) && $errorMessage !== null): ?>
             <p style="color: red;"><?= htmlspecialchars($errorMessage) ?></p>
           <?php endif; ?>

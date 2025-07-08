@@ -15,7 +15,7 @@ require_once __DIR__ . '/../../../ws/config/config.php';
     <!-- From Uiverse.io by Smit-Prajapati -->
     <form class="form" action="<?= BASE_URL ?>/login" method="post">
         <div class="flex-column">
-            <label>Role (Client ou Investisseur ou Etablissement) </label>
+            <label>Username (Client ou Investisseur ou Etablissement) </label>
         </div>
         <div class="inputForm">
             <svg height="20" viewBox="0 0 32 32" width="20" xmlns="http://www.w3.org/2000/svg">
@@ -49,7 +49,7 @@ require_once __DIR__ . '/../../../ws/config/config.php';
         </div>
         <button class="button-submit">Log In</button>
 
-        <p class="p"><a href="<?php echo BASE_URL; ?>/client/create">Don't have an account? <span class="span">Sign Up</span>
+        <p class="p"><a href="<?php echo BASE_URL; ?>/client/create">Don't have an account? <span class="span">Sign Up (compte client)</span>
             </a>
         </p>
         <p class="p line">Or With</p>
