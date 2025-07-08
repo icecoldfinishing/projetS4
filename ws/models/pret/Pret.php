@@ -22,8 +22,8 @@ class Pret {
     public static function create($data) {
         $db = getDB();
         $stmt = $db->prepare("
-            INSERT INTO pret (id_user, id_statut, valeur, dateDebut, duree, delai, id_typePret, commentaire, assurance, valeurAssurance)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            INSERT INTO pret (id_user, id_statut, valeur, dateDebut, duree, delai, id_typePret, commentaire)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
         ");
         $stmt->execute([
             $data->id_user,
@@ -33,9 +33,7 @@ class Pret {
             $data->duree,
             $data->delai,
             $data->id_typePret,
-            $data->commentaire,
-            $data->assurance,
-            $data->valeurAssurance
+            $data->commentaire
         ]);
     }
 
