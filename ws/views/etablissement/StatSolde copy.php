@@ -9,7 +9,7 @@ require_once __DIR__ . '/../../../ws/config/config.php';
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>Statistiques d'Intérêts - Open Enterprise</title>
+  <title>Liste des soldes mensuels - Open Enterprise</title>
 
   <link rel="apple-touch-icon" sizes="180x180" href="<?= BASE_URL ?>/public/assets_template/img/favicons/apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="32x32" href="<?= BASE_URL ?>/public/assets_template/img/favicons/favicon-32x32.png">
@@ -17,19 +17,19 @@ require_once __DIR__ . '/../../../ws/config/config.php';
   <link rel="shortcut icon" type="image/x-icon" href="<?= BASE_URL ?>/public/assets_template/img/favicons/favicon.ico">
   <link rel="manifest" href="<?= BASE_URL ?>/public/assets_template/img/favicons/manifest.json">
   <link rel="stylesheet" href="<?= BASE_URL ?>/public/assets/css/interets.css">
-  <meta name="msapplication-TileImage" content="assets_template/img/favicons/mstile-150x150.png">
   <meta name="theme-color" content="#ffffff">
 
+  <!-- Optional local CSS fallback -->
   <link href="<?= BASE_URL ?>/public/assets_template/css/theme.css" rel="stylesheet" />
-  <link href="vendors/swiper/swiper-bundle.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
 </head>
 
 <body data-bs-spy="scroll" data-bs-target="#navbar">
-
   <main class="main" id="top">
+    <!-- NAVBAR -->
     <nav class="navbar navbar-expand-xl navbar-light fixed-top px-0 pb-0 mb-2" id="navbar" data-navbar-darken-on-scroll="white">
       <div class="container-fluid align-items-center py-2">
-        <a class="navbar-brand flex-center" href="index.html">
+        <a class="navbar-brand flex-center" href="#">
           <img class="logo" src="<?= BASE_URL ?>/public/assets_template/img/logo.png" alt="open enterprise" />
           <span class="ms-2 d-none d-sm-block fw-bold">Open Enterprise</span>
         </a>
@@ -39,17 +39,17 @@ require_once __DIR__ . '/../../../ws/config/config.php';
         </button>
         <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
           <ul class="navbar-nav mr-auto mt-3 mt-xl-0">
-            <li class="nav-item ps-0 ps-xl-4 ms-2"><a class="nav-link fs-2 fw-medium" href="<?php echo BASE_URL; ?>/etablissement">Home</a></li>
-            <li class="nav-item ps-0 ps-xl-4 ms-2"><a class="nav-link fs-2 fw-medium" href="<?php echo BASE_URL; ?>/typePretPage">Type pret</a></li>
-            <li class="nav-item ps-0 ps-xl-4 ms-2"><a class="nav-link fs-2 fw-medium" href="<?php echo BASE_URL; ?>/demandePret">Demande de Pret</a></li>
-            <li class="nav-item ps-0 ps-xl-4 ms-2"><a class="nav-link fs-2 fw-medium" href="<?php echo BASE_URL; ?>/stat">Statistiques d'interet</a></li>
-            <li class="nav-item ps-0 ps-xl-4 ms-2"><a class="nav-link fs-2 fw-medium" href="<?php echo BASE_URL; ?>/stats">Analyse de solde</a></li>
-            <li class="nav-item ps-0 ps-xl-4 ms-2"><a class="nav-link fs-2 fw-medium" href="<?php echo BASE_URL; ?>/login">Logout</a></li>
+            <li class="nav-item"><a class="nav-link" href="<?= BASE_URL ?>/etablissement">Home</a></li>
+            <li class="nav-item"><a class="nav-link" href="<?= BASE_URL ?>/typePretPage">Type pret</a></li>
+            <li class="nav-item"><a class="nav-link" href="<?= BASE_URL ?>/demandePret">Demande de Pret</a></li>
+            <li class="nav-item"><a class="nav-link" href="<?= BASE_URL ?>/stat">Statistiques d'intérêt</a></li>
+            <li class="nav-item"><a class="nav-link" href="<?= BASE_URL ?>/login">Logout</a></li>
           </ul>
         </div>
       </div>
     </nav>
 
+    <!-- FORM + RESULTS -->
     <section class="pt-8 py-lg-0" id="hero">
       <div class="container-xxl">
         <div class="stats-container">
@@ -115,23 +115,7 @@ require_once __DIR__ . '/../../../ws/config/config.php';
       </div>
     </section>
 
-    <section id="rea">
-      <div class="container-xxl">
-        <div class="row align-items-center">
-          <div class="col-lg order-lg-1 text-center">
-            <img class="img-fluid" src="<?= BASE_URL ?>/public/assets_template/img/illustrations/hero2.png" alt="" />
-          </div>
-          <div class="col-lg mt-5 mt-lg-0">
-            <h1 class="lh-sm font-cursive fw-medium display-5">Start an Open Enterprise with :</h1>
-            <p class="mt-4 fs-1">ETU003246 Sanda</p>
-            <p class="mt-4 fs-1">ETU003295 Rohy</p>
-            <p class="mt-4 fs-1">ETU003660 Fenitra</p>
-            <button class="btn btn-success mt-4">Request early access</button>
-          </div>
-        </div>
-      </div>
-    </section>
-
+    <!-- Footer -->
     <section class="py-4">
       <div class="container-xxl">
         <div class="row justify-content-center align-items-center">
@@ -139,15 +123,15 @@ require_once __DIR__ . '/../../../ws/config/config.php';
             <h2 class="mb-lg-0">Open Enterprise</h2>
           </div>
           <div class="col-lg-6 text-sm-center text-lg-end">
-            <p class="mb-0">&copy; This template is made with ❤️ by <a href="https://themewagon.com/">ThemeWagon</a></p>
+            <p class="mb-0">&copy; Made with ❤️ by <a href="#">Sanda, Rohy, Fenitra</a></p>
           </div>
         </div>
       </div>
     </section>
   </main>
 
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-
+  <!-- JS Libraries -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script>
     const apiBase = "<?= BASE_URL ?>";
 
@@ -270,16 +254,9 @@ require_once __DIR__ . '/../../../ws/config/config.php';
     window.addEventListener('load', () => setTimeout(rechercher, 1000));
   </script>
 
-  <script src="vendors/@popperjs/popper.min.js"></script>
-  <script src="vendors/bootstrap/bootstrap.min.js"></script>
-  <script src="vendors/is/is.min.js"></script>
-  <script src="vendors/swiper/swiper-bundle.min.js"></script>
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=window.scroll"></script>
-  <script src="<?= BASE_URL ?>/public/assets_template/js/theme.js"></script>
-  <script src="<?= BASE_URL ?>/public/assets/js/interets.js"></script>
-
-  <link rel="preconnect" href="https://fonts.gstatic.com">
-  <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&amp;family=Roboto:wght@400;500;600;700;900&amp;display=swap" rel="stylesheet">
+  <!-- Optionally add Bootstrap via CDN if not available locally -->
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
 </body>
 
 </html>

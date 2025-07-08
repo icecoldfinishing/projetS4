@@ -43,6 +43,7 @@ require_once __DIR__ . '/../../../ws/config/config.php';
             <li class="nav-item ps-0 ps-xl-4 ms-2"><a class="nav-link fs-2 fw-medium" href="<?php echo BASE_URL; ?>/typePretPage">Type pret</a></li>
             <li class="nav-item ps-0 ps-xl-4 ms-2"><a class="nav-link fs-2 fw-medium" href="<?php echo BASE_URL; ?>/demandePret">Demande de Pret</a></li>
             <li class="nav-item ps-0 ps-xl-4 ms-2"><a class="nav-link fs-2 fw-medium" href="<?php echo BASE_URL; ?>/stat">Statistiques d'interet</a></li>
+            <li class="nav-item ps-0 ps-xl-4 ms-2"><a class="nav-link fs-2 fw-medium" href="<?php echo BASE_URL; ?>/stats">Analyse de solde</a></li>
             <li class="nav-item ps-0 ps-xl-4 ms-2"><a class="nav-link fs-2 fw-medium" href="<?php echo BASE_URL; ?>/login">Logout</a></li>
           </ul>
         </div>
@@ -65,7 +66,7 @@ require_once __DIR__ . '/../../../ws/config/config.php';
                   <input type="number" id="anneeDebut" placeholder="Année" value="2020">
                 </div>
               </div>
-              
+
               <div class="form-group">
                 <label>Fin</label>
                 <div style="display: flex; gap: 10px;">
@@ -73,7 +74,7 @@ require_once __DIR__ . '/../../../ws/config/config.php';
                   <input type="number" id="anneeFin" placeholder="Année" value="2025">
                 </div>
               </div>
-              
+
               <button class="btn-rechercher" onclick="rechercher()">
                 Analyser
               </button>
@@ -177,7 +178,7 @@ require_once __DIR__ . '/../../../ws/config/config.php';
     function renderChart(labels, data) {
       const ctx = document.getElementById("chart");
       if (chart) chart.destroy();
-      
+
       chart = new Chart(ctx, {
         type: "line",
         data: {
@@ -273,7 +274,7 @@ require_once __DIR__ . '/../../../ws/config/config.php';
       const totalCell = document.getElementById("totalCell");
 
       tbody.innerHTML = "";
-      
+
       if (rows.length === 0) {
         tbody.innerHTML = `<tr><td colspan="2" class="no-results">
                          Aucun résultat trouvé pour cette période
@@ -306,7 +307,7 @@ require_once __DIR__ . '/../../../ws/config/config.php';
         minimumFractionDigits: 2, 
         maximumFractionDigits: 2 
       })} Ar`;
-      
+
       renderChart(labels, data);
     }
 
@@ -337,7 +338,7 @@ require_once __DIR__ . '/../../../ws/config/config.php';
         (data) => {
           document.getElementById("loading").classList.remove("active");
           remplirTableau(data);
-        }, 
+        },
         true
       );
     }
