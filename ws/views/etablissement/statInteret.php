@@ -152,7 +152,7 @@ require_once __DIR__ . '/../../../ws/config/config.php';
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 
   <script>
-    const apiBase = "http://localhost<?= BASE_URL ?>";
+    const apiBase = "<?= BASE_URL ?>";
 
     function ajax(method, url, data, cb, json = false) {
       const xhr = new XMLHttpRequest();

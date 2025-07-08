@@ -147,7 +147,7 @@ require_once __DIR__ . '/../../../ws/config/config.php';
   <!-- ===============================================-->
 
   <script>
-    const apiBase = "http://localhost<?= BASE_URL ?>";
+    const apiBase = "<?= BASE_URL ?>";
 
     function ajax(method, url, data, callback, sendJson = false) {
       const xhr = new XMLHttpRequest();
