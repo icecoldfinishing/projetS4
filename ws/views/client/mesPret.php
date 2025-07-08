@@ -80,6 +80,7 @@ require_once __DIR__ . '/../../../ws/config/config.php';
                   <th>Type de prêt</th>
                   <th>Commentaire</th>
                   <th>Assurance</th>
+                  <th>Valeur Assurance</th>
                   <th>Statut</th>
                   <th>Actions</th>
                 </tr>
@@ -96,6 +97,7 @@ require_once __DIR__ . '/../../../ws/config/config.php';
                     <td><?= htmlspecialchars($pret['id_typePret']) ?></td>
                     <td><?= nl2br(htmlspecialchars($pret['commentaire'])) ?></td>
                     <td><?= htmlspecialchars(Pret::getAssuranceTexte($pret['assurance'])) ?></td> 
+                    <td><?= htmlspecialchars(TypePret::getAssuranceById($pret['assurance'])) ?></td> 
                     <td>accepte</td>
                     <td>
                       <form method="post" action="<?= BASE_URL ?>/pret/export-pdf">

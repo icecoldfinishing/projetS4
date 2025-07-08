@@ -95,6 +95,7 @@ class PdfController
         
         $nomUtilisateur = User::getNom($pret['id_user']);
         $assurance = Pret::getAssuranceTexte($pret['assurance']);
+        $valeur = TypePret::getAssuranceById($pret['assurance']);
         // Titre section
         $pdf->SetFont('Arial', 'B', 14);
         $pdf->SetTextColor(52, 73, 94);
@@ -184,29 +185,30 @@ class PdfController
         // Titre section
         $pdf->SetFont('Arial', 'B', 14);
         $pdf->SetTextColor(52, 73, 94);
-        $pdf->Cell(0, 10, utf8_decode('RÉCAPITULATIF FINANCIER'), 0, 1, 'L');
+        $pdf->Cell(0, 20, utf8_decode('RÉCAPITULATIF FINANCIER'), 0, 1, 'L');
         $pdf->Ln(5);
         
+        $valeur = TypePret::getAssuranceById($pret['assurance']);
         // Calculs
         $montantPret = floatval($pret['valeur']);
-        $valeurAssurance = floatval($pret['valeurAssurance'] ?? 0);
-        $montantTotal = $montantPret + $valeurAssurance;
+        $valeurAssurance = floatval($valeur ?? 0);
+        $montantTotal = $montantPret+ ($montantPret * $valeurAssurance)/100;
         
         // Boîte récapitulatif
         $pdf->SetFillColor(245, 245, 245);
         $pdf->SetDrawColor(200, 200, 200);
-        $pdf->Rect(20, $pdf->GetY(), 170, 35, 'DF');
+        $pdf->Rect(20, $pdf->GetY()-8, 170, 35, 'DF');
         
-        $pdf->SetXY(25, $pdf->GetY() + 5);
+        $pdf->SetXY(25, $pdf->GetY() + 3);
         $pdf->SetFont('Arial', 'B', 12);
         $pdf->SetTextColor(0, 0, 0);
         
-        $pdf->Cell(80, 8, utf8_decode('Montant du prêt:'), 0, 0, 'L');
-        $pdf->Cell(80, 8, number_format($montantPret, 2, ',', ' ') . ' Ariary', 0, 1, 'R');
+        $pdf->Cell(80, 5, utf8_decode('Montant du prêt:'), 0, 0, 'L');
+        $pdf->Cell(80, 5, number_format($montantPret, 2, ',', ' ') . ' Ariary', 0, 1, 'R');
         
         $pdf->SetX(25);
-        $pdf->Cell(80, 8, utf8_decode('Valeur assurance:'), 0, 0, 'L');
-        $pdf->Cell(80, 8, number_format($valeurAssurance, 2, ',', ' ') . ' %', 0, 1, 'R');
+        $pdf->Cell(80, 5, utf8_decode('Valeur assurance:'), 0, 0, 'L');
+        $pdf->Cell(80, 5, number_format($valeurAssurance, 2, ',', ' ') . ' %', 0, 1, 'R');
         
         // Ligne de séparation
         $pdf->SetDrawColor(100, 100, 100);
@@ -226,18 +228,15 @@ class PdfController
         
         // Ligne de séparation
         $pdf->SetDrawColor(200, 200, 200);
-        $pdf->Line(20, $pdf->GetY(), 190, $pdf->GetY());
+        $pdf->Line(20, $pdf->GetY()+8, 190, $pdf->GetY()+8);
         $pdf->Ln(5);
         
         // Informations de contact
         $pdf->SetFont('Arial', 'I', 9);
         $pdf->SetTextColor(128, 128, 128);
-        $pdf->Cell(0, 5, utf8_decode('Banque of Africa - 123 Rue de la Finance, Antaninarenina'), 0, 1, 'C');
-        $pdf->Cell(0, 5, utf8_decode('Tél: +261 21 155 97 - Email: BOA@gmail.mg'), 0, 1, 'C');
+        $pdf->Cell(0, 12, utf8_decode('Banque of Africa - 123 Rue de la Finance, Antaninarenina'), 0, 1, 'C');
         
         // Numéro de page
-        $pdf->SetFont('Arial', '', 8);
-        $pdf->Cell(0, 5, utf8_decode('Page ' . $pdf->PageNo()), 0, 1, 'C');
     }
     
     private static function getStatutInfo($idStatut)
