@@ -1,4 +1,6 @@
 <?php
+require_once __DIR__ . '/../../db.php';
+
 class CompteEntreprise {
     private $db;
 
@@ -7,22 +9,19 @@ class CompteEntreprise {
     }
 
     public function getLastValeur() {
-        $stmt = $this->db->query("SELECT valeur FROM compteentreprise ORDER BY id DESC LIMIT 1");
+        $stmt = $this->db->query("SELECT SUM(valeur)as valeur FROM compteentreprise ORDER BY id DESC LIMIT 1");
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
         return $result ? $result['valeur'] : 0;
     }
 
     public function ajouterFonds($montant, $date) {
-        $lastValeur = $this->getLastValeur();
-        $newValeur = $lastValeur + $montant;
         $stmt = $this->db->prepare("INSERT INTO compteentreprise (valeur, date) VALUES (?, ?)");
-        return $stmt->execute([$newValeur, $date]);
+        return $stmt->execute([$montant, $date]);
     }
 
     public function updateSolde($montant, $date) {
-        $lastValeur = $this->getLastValeur();
-        $newValeur = $lastValeur - $montant;
-        $stmt = $this->db->prepare("INSERT INTO compteentreprise (valeur,date) VALUES (?,NOW())");
-        return $stmt->execute([$newValeur]);
+        $newValeur = 0 - $montant;
+        $stmt = $this->db->prepare("INSERT INTO compteentreprise (valeur,date) VALUES (?,?)");
+        return $stmt->execute([$newValeur, $date]);
     }
 }

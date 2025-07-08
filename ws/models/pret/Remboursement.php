@@ -45,6 +45,10 @@ public static function generateRemboursements(int $pretId): float
         INSERT INTO remboursement (id_pret, mensualite, valeur, dateRemboursement)
         VALUES (?, ?, ?, ?)
     ");
+    $ins2 = $db->prepare("
+        INSERT INTO compteEntreprise ( valeur, date)
+        VALUES (?, ?)
+    ");
 
     $date = new DateTime($p['dateDebut']);
     $date->modify("+{$g} months");
@@ -57,6 +61,10 @@ public static function generateRemboursements(int $pretId): float
         $ins->execute([
             $pretId,
             $i,
+            $value,
+            $date->format('Y-m-d')
+        ]);
+        $ins2->execute([
             $value,
             $date->format('Y-m-d')
         ]);
