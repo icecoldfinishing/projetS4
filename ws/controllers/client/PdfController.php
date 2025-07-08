@@ -1,7 +1,9 @@
 <?php
 require_once __DIR__ . '/../../models/pret/Pret.php';
+require_once __DIR__ . '/../../models/other/User.php';
 require_once __DIR__ . '/../../models/etablissement/typePret.php';
 require_once __DIR__ . '/../../vendor/fpdf186/fpdf.php';
+
 
 class PdfController
 {
@@ -90,6 +92,8 @@ class PdfController
     
     private static function addPretDetails($pdf, $pret, $nomTypePret, $statutInfo)
     {
+        
+        $nomUtilisateur = User::getNom($pret['id_user']);
         // Titre section
         $pdf->SetFont('Arial', 'B', 14);
         $pdf->SetTextColor(52, 73, 94);
@@ -104,7 +108,7 @@ class PdfController
         // Tableau des informations
         $details = [
             ['Référence du prêt', $pret['id']],
-            ['Identifiant utilisateur', $pret['id_user']],
+            ['Utilisateur', $nomUtilisateur],
             ['Montant demandé', number_format($pret['valeur'], 2, ',', ' ') . ' Ariary'],
             ['Date de début', self::formatDate($pret['dateDebut'])],
             ['Durée du prêt', $pret['duree'] . ' mois'],
