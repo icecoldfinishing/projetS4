@@ -69,6 +69,7 @@ require_once __DIR__ . '/../../../ws/config/config.php';
                             <?php echo $success ? '✅ Fonds ajoutés avec succès.' : '❌ Échec de l’ajout des fonds.'; ?>
                         </p>
                     <?php endif; ?>
+                    <p>Solde actuel : <?= CompteEntreprise::getLastValeur() ?> Ar</p>
                     <form method="POST" action="<?php echo BASE_URL; ?>/investisseur/AjoutFonds">
                         <label for="valeur">Montant à ajouter :</label>
                         <input type="number" name="valeur" id="valeur" required>
