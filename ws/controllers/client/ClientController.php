@@ -16,6 +16,10 @@ class ClientController
         $roles = Role::getAll(); // Récupère tous les rôles pour le formulaire
         include __DIR__ . '/../../views/other/signin.php';
     }
+    public static function simulation()
+    {
+        include __DIR__ . '/../../views/client/simulation.php';
+    }
     public static function demande()
     {
         $roles = Role::getAll();

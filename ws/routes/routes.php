@@ -31,6 +31,7 @@ Flight::route('GET /hello', ['HelloController', 'afficher']);
 //  Client 
 Flight::route('GET /client', ['ClientController', 'afficher']);
 Flight::route('GET /demande', ['ClientController', 'demande']);
+Flight::route('GET /simulation', ['ClientController', 'simulation']);
 Flight::route('POST /client/create', ['ClientController', 'store']);
 Flight::route('GET /client/create', ['ClientController', 'create']);
 Flight::route('POST /pret/demande', ['ClientController', 'storePret']);
