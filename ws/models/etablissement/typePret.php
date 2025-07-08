@@ -1,6 +1,5 @@
 <?php
 require_once __DIR__ . '/../../db.php';
-require_once __DIR__.'/../../config/config.php'; 
 
 class TypePret
 {
@@ -23,10 +22,10 @@ class TypePret
     {
         $db   = getDB();
         $stmt = $db->prepare(
-            "INSERT INTO typePret (nom, taux, duree)
-             VALUES (?, ?, ?)"
+            "INSERT INTO typePret (nom, taux, assurance, duree)
+             VALUES (?, ?, ?, ?)"
         );
-        $stmt->execute([$data->nom, $data->taux, $data->duree]);
+        $stmt->execute([$data->nom, $data->taux, $data->assurance, $data->duree]);
         return $db->lastInsertId();
     }
 
@@ -35,10 +34,10 @@ class TypePret
         $db   = getDB();
         $stmt = $db->prepare(
             "UPDATE typePret
-               SET nom = ?, taux = ?, duree = ?
+               SET nom = ?, taux = ?, assurance = ?, duree = ?
              WHERE id = ?"
         );
-        $stmt->execute([$data->nom, $data->taux, $data->duree, $id]);
+        $stmt->execute([$data->nom, $data->taux, $data->assurance, $data->duree, $id]);
     }
 
     public static function delete($id)

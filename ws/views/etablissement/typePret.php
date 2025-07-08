@@ -72,6 +72,7 @@ require_once __DIR__ . '/../../../ws/config/config.php';
             <input type="hidden" id="id">
             <input type="text" id="nom" placeholder="Nom">
             <input type="number" id="taux" placeholder="Taux" step="0.01">
+            <input type="number" id="assurance" placeholder="Assurance" step="0.01">
             <input type="hidden" id="duree" value="1">
             <button onclick="ajouterOuModifier()">Ajouter / Modifier</button>
           </div>
@@ -81,6 +82,7 @@ require_once __DIR__ . '/../../../ws/config/config.php';
                 <th>ID</th>
                 <th>Nom</th>
                 <th>Taux</th>
+                <th>Assurance</th>
                 <th>Durée</th>
                 <th>Actions</th>
               </tr>
@@ -182,6 +184,7 @@ require_once __DIR__ . '/../../../ws/config/config.php';
             <td>${tp.id}</td>
             <td>${tp.nom}</td>
             <td>${tp.taux}</td>
+            <td>${tp.assurance}</td>
             <td>${tp.duree}</td>
             <td>
               <button onclick='remplirFormulaire(${JSON.stringify(tp)})'>✏️</button>
@@ -197,12 +200,14 @@ require_once __DIR__ . '/../../../ws/config/config.php';
       const id = document.getElementById("id").value;
       const nom = document.getElementById("nom").value;
       const taux = document.getElementById("taux").value;
+      const assurance = document.getElementById("assurance").value;
       const duree = document.getElementById("duree").value;
 
-      const urlData = `nom=${encodeURIComponent(nom)}&taux=${taux}&duree=${duree}`;
+      const urlData = `nom=${encodeURIComponent(nom)}&taux=${taux}&assurance=${assurance}&duree=${duree}`;
       const body = {
         nom,
         taux,
+        assurance,
         duree
       };
 
@@ -223,6 +228,7 @@ require_once __DIR__ . '/../../../ws/config/config.php';
       document.getElementById("id").value = tp.id;
       document.getElementById("nom").value = tp.nom;
       document.getElementById("taux").value = tp.taux;
+      document.getElementById("assurance").value = tp.assurance;
       document.getElementById("duree").value = tp.duree;
     }
 
@@ -238,6 +244,7 @@ require_once __DIR__ . '/../../../ws/config/config.php';
       document.getElementById("id").value = "";
       document.getElementById("nom").value = "";
       document.getElementById("taux").value = "";
+      document.getElementById("assurance").value = "";
       document.getElementById("duree").value = "";
     }
 
