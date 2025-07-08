@@ -96,6 +96,11 @@ class PdfController
         $pdf->Cell(0, 10, utf8_decode('INFORMATIONS GÉNÉRALES'), 0, 1, 'L');
         $pdf->Ln(5);
         
+        // Formatage des données d'assurance
+        $assuranceTexte = !empty($pret['Assurance']) ? $pret['Assurance'] : 'Non souscrite';
+        $valeurAssuranceTexte = !empty($pret['valeurAssurance']) ? 
+            number_format($pret['valeurAssurance'], 2, ',', ' ') . ' Ariary' : 'N/A';
+        
         // Tableau des informations
         $details = [
             ['Référence du prêt', $pret['id']],
@@ -105,6 +110,8 @@ class PdfController
             ['Durée du prêt', $pret['duree'] . ' mois'],
             ['Délai de remboursement', $pret['delai']],
             ['Type de prêt', $nomTypePret],
+            ['Assurance', $assuranceTexte],
+            ['Valeur Assurance', $valeurAssuranceTexte],
             ['Statut', $statutInfo['texte']]
         ];
         
@@ -128,6 +135,10 @@ class PdfController
             // Couleur spéciale pour le statut
             if ($detail[0] === 'Statut') {
                 $pdf->SetTextColor($statutInfo['couleur'][0], $statutInfo['couleur'][1], $statutInfo['couleur'][2]);
+            }
+            // Couleur spéciale pour l'assurance
+            if ($detail[0] === 'Assurance' && $detail[1] !== 'Non souscrite') {
+                $pdf->SetTextColor(0, 128, 0); // Vert pour assurance active
             }
             $pdf->Cell(110, 10, utf8_decode($detail[1]), 1, 1, 'L', true);
             $pdf->SetTextColor(0, 0, 0);
@@ -156,12 +167,58 @@ class PdfController
             $pdf->SetFont('Arial', '', 10);
             $pdf->MultiCell(160, 4, utf8_decode($pret['commentaire']));
         }
+        
+        // Section récapitulatif financier
+        self::addFinancialSummary($pdf, $pret);
+    }
+    
+    private static function addFinancialSummary($pdf, $pret)
+    {
+        // Positionnement pour le récapitulatif
+        $pdf->Ln(12);
+        
+        // Titre section
+        $pdf->SetFont('Arial', 'B', 14);
+        $pdf->SetTextColor(52, 73, 94);
+        $pdf->Cell(0, 10, utf8_decode('RÉCAPITULATIF FINANCIER'), 0, 1, 'L');
+        $pdf->Ln(5);
+        
+        // Calculs
+        $montantPret = floatval($pret['valeur']);
+        $valeurAssurance = floatval($pret['valeurAssurance'] ?? 0);
+        $montantTotal = $montantPret + $valeurAssurance;
+        
+        // Boîte récapitulatif
+        $pdf->SetFillColor(245, 245, 245);
+        $pdf->SetDrawColor(200, 200, 200);
+        $pdf->Rect(20, $pdf->GetY(), 170, 35, 'DF');
+        
+        $pdf->SetXY(25, $pdf->GetY() + 5);
+        $pdf->SetFont('Arial', 'B', 12);
+        $pdf->SetTextColor(0, 0, 0);
+        
+        $pdf->Cell(80, 8, utf8_decode('Montant du prêt:'), 0, 0, 'L');
+        $pdf->Cell(80, 8, number_format($montantPret, 2, ',', ' ') . ' Ariary', 0, 1, 'R');
+        
+        $pdf->SetX(25);
+        $pdf->Cell(80, 8, utf8_decode('Valeur assurance:'), 0, 0, 'L');
+        $pdf->Cell(80, 8, number_format($valeurAssurance, 2, ',', ' ') . ' %', 0, 1, 'R');
+        
+        // Ligne de séparation
+        $pdf->SetDrawColor(100, 100, 100);
+        $pdf->Line(25, $pdf->GetY() + 2, 185, $pdf->GetY() + 2);
+        
+        $pdf->SetXY(25, $pdf->GetY() + 5);
+        $pdf->SetFont('Arial', 'B', 14);
+        $pdf->SetTextColor(46, 125, 50);
+        $pdf->Cell(80, 8, utf8_decode('TOTAL:'), 0, 0, 'L');
+        $pdf->Cell(80, 8, number_format($montantTotal, 2, ',', ' ') . ' Ariary', 0, 1, 'R');
     }
     
     private static function addFooter($pdf)
     {
-        // Positionnement en bas de page
-        $pdf->SetY(-60);
+        // Positionnement en bas de page (descendu de 100px)
+        $pdf->SetY(-40);
         
         // Ligne de séparation
         $pdf->SetDrawColor(200, 200, 200);
@@ -174,7 +231,10 @@ class PdfController
         $pdf->Cell(0, 5, utf8_decode('Banque Partenaire - 123 Rue de la Finance, 75001 Paris'), 0, 1, 'C');
         $pdf->Cell(0, 5, utf8_decode('Tél: 01 23 45 67 89 - Email: contact@banque-partenaire.fr'), 0, 1, 'C');
         
-           }
+        // Numéro de page
+        $pdf->SetFont('Arial', '', 8);
+        $pdf->Cell(0, 5, utf8_decode('Page ' . $pdf->PageNo()), 0, 1, 'C');
+    }
     
     private static function getStatutInfo($idStatut)
     {

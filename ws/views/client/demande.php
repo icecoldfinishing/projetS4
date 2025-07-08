@@ -76,7 +76,7 @@ if (isset($_SESSION['success'])) {
 
       <div class="container-xxl">
         <div class="row align-items-center min-vh-lg-100">
-
+          <h1></h1>
           <?php if ($user): ?>
             <p>Bienvenue, <strong><?= htmlspecialchars($user['prenom']) ?> <?= htmlspecialchars($user['nom']) ?></strong> (ID: <?= $user['id'] ?>)</p>
           <?php else: ?>
