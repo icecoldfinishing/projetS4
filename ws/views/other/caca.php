@@ -42,6 +42,7 @@ require_once __DIR__ . '/ws/config/config.php';
 
   <script>
   const apiBase = "http://localhost/S4/ProjetS4/ws";   // remove () if you can
+  //const apiBase = "http://localhost/S4/ProjetS4/ws";  
 
   /* -------------------------------------------------
      Generic AJAX helper (single xhr.send)
