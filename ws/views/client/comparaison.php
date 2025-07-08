@@ -166,7 +166,7 @@ if (!$user) {
 
 
   <script>
-    const apiBase = "http://localhost<?= BASE_URL ?>";
+    const apiBase = "<?= BASE_URL ?>";
     let allSimulations = [];
 
     function ajax(method, url, data, cb) {
