@@ -99,10 +99,12 @@ CREATE TABLE annuite (
 
 CREATE TABLE simulation(
     id INT PRIMARY KEY AUTO_INCREMENT,
+    id_user INT,
     montant INT,
     taux INT,
     duree INT,
     mensualite  DECIMAL(10,2),
     total  DECIMAL(10,2),
-    credit  DECIMAL(10,2)
+    credit  DECIMAL(10,2),
+    FOREIGN KEY (id_user) REFERENCES user(id)
 );
