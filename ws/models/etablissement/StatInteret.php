@@ -24,8 +24,7 @@ public static function getByMonth($data)
     ]);
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
-public static function getInteretParPeriode(int $mDebut, int $aDebut,
-                                            int $mFin,  int $aFin): array
+public static function getInteretParPeriode(int $mDebut, int $aDebut, int $mFin, int $aFin): array
 {
     $db = getDB();
 
@@ -33,34 +32,73 @@ public static function getInteretParPeriode(int $mDebut, int $aDebut,
     $dateEnd   = date('Y-m-t', strtotime(sprintf('%04d-%02d-01', $aFin, $mFin)));
 
     $sql = "
-      SELECT  YEAR(r.dateRemboursement)  AS annee,
-              MONTH(r.dateRemboursement) AS mois,
-              ROUND(
-                  SUM(p.valeur * tp.taux / 100 / 12)
-              , 2)                        AS interet
-      FROM    remboursement r
-      JOIN    pret       p  ON r.id_pret     = p.id
-      JOIN    typePret   tp ON p.id_typePret = tp.id
-      WHERE   r.dateRemboursement BETWEEN ? AND ?
-      GROUP BY annee, mois
-      ORDER BY annee, mois
+        SELECT r.dateRemboursement, r.valeur AS remboursement_valeur,
+               p.valeur AS capital, p.duree
+        FROM remboursement r
+        JOIN pret p ON r.id_pret = p.id
+        WHERE r.dateRemboursement BETWEEN ? AND ?
+        ORDER BY r.dateRemboursement
     ";
 
     $stmt = $db->prepare($sql);
     $stmt->execute([$dateStart, $dateEnd]);
     $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-    /* total global */
+    $interetsByMonth = [];
     $total = 0;
-    foreach ($rows as $r) $total += $r['interet'];
+
+    foreach ($rows as $row) {
+        $date = new DateTime($row['dateRemboursement']);
+        $annee = (int)$date->format('Y');
+        $mois = (int)$date->format('m');
+
+        $remboursement = (float)$row['remboursement_valeur'];
+        $capital = (float)$row['capital'];
+        $duree = (int)$row['duree'];
+
+        if ($duree <= 0) continue;
+
+        $principalMensuel = $capital / $duree;
+        $interetMensuel = $remboursement - $principalMensuel;
+
+        $key = sprintf('%04d-%02d', $annee, $mois);
+        if (!isset($interetsByMonth[$key])) {
+            $interetsByMonth[$key] = 0;
+        }
+
+        $interetsByMonth[$key] += $interetMensuel;
+        $total += $interetMensuel;
+    }
+
+    $resultRows = [];
+    foreach ($interetsByMonth as $key => $interet) {
+        list($annee, $mois) = explode('-', $key);
+        $resultRows[] = [
+            'annee' => (int)$annee,
+            'mois' => (int)$mois,
+            'interet' => round($interet, 2),
+        ];
+    }
+
+    usort($resultRows, function ($a, $b) {
+        return $a['annee'] === $b['annee']
+            ? $a['mois'] <=> $b['mois']
+            : $a['annee'] <=> $b['annee'];
+    });
 
     return [
-        'mois'  => $rows,        // tableau [{annee, mois, interet}, …]
+        'mois' => $resultRows,
         'total' => round($total, 2)
     ];
 }
 
-
-
-
 }
+
+
+
+
+
+
+
+
+
