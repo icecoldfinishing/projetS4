@@ -56,7 +56,7 @@ require_once __DIR__ . '/../../../ws/config/config.php';
             <li class="nav-item ps-0 ps-xl-4 ms-2"><a class="nav-link fs-2 fw-medium" href="<?php echo BASE_URL; ?>/demande"">Faire demande de pret </a></li>
               <li class=" nav-item ps-0 ps-xl-4 ms-2"><a class="nav-link fs-2 fw-medium" href="<?php echo BASE_URL; ?>/MesPret">Mes pret</a></li>
             <li class="nav-item ps-0 ps-xl-4 ms-2"><a class="nav-link fs-2 fw-medium" href="<?php echo BASE_URL; ?>/simulation">Simulation</a></li>
-              <li class="nav-item ps-0 ps-xl-4 ms-2"><a class="nav-link fs-2 fw-medium" href="<?php echo BASE_URL; ?>/comparaison">Comparer des simulation</a></li>
+            <li class="nav-item ps-0 ps-xl-4 ms-2"><a class="nav-link fs-2 fw-medium" href="<?php echo BASE_URL; ?>/comparaison">Comparer des simulation</a></li>
             <li class="nav-item ps-0 ps-xl-4 ms-2"><a class="nav-link fs-2 fw-medium" href="<?php echo BASE_URL; ?>/login">Logout</a></li>
           </ul>
         </div>
@@ -187,49 +187,33 @@ require_once __DIR__ . '/../../../ws/config/config.php';
       });
     }
 
-    /* ------------- Simulation côté client ---------- */
-  function simulerPret() {
-    const val = +document.getElementById("valeur").value;
-    const n = +document.getElementById("duree").value;
-    const sel = document.getElementById("id_typePret");
-    const selectedOption = sel.options[sel.selectedIndex];
-    const tauxAnnuel = parseFloat(selectedOption.dataset.taux);
-    const assurance = parseFloat(selectedOption.dataset.assurance) || 0; // Récupération de l'assurance
+    function simulerPret() {
+      const val = +document.getElementById("valeur").value;
+      const n = +document.getElementById("duree").value;
+      const sel = document.getElementById("id_typePret");
+      const selectedOption = sel.options[sel.selectedIndex];
+      const tauxAnnuel = parseFloat(selectedOption.dataset.taux);
+      const assurance = parseFloat(selectedOption.dataset.assurance) || 0;
 
-    if (!val || !n || isNaN(tauxAnnuel)) {
-      alert("Champs manquants");
-      return;
-    }
-    if (val <= 0 || n <= 0) {
-      alert("Valeurs positives requises");
-      return;
-    }
+      if (!val || !n || isNaN(tauxAnnuel)) {
+        alert("Champs manquants");
+        return;
+      }
+      if (val <= 0 || n <= 0) {
+        alert("Valeurs positives requises");
+        return;
+      }
 
-    // Calcul du taux mensuel
-    const r = tauxAnnuel / 100 / 12;
-    
-    // Calcul de la mensualité de base (sans assurance)
-    const mensualiteBase = val * r / (1 - Math.pow(1 + r, -n));
-    
-    // Calcul du coût de l'assurance mensuelle
-    const coutAssuranceMensuelle = (val * assurance / 100) / 12;
-    
-    // Mensualité totale (capital + intérêts + assurance)
-    const M = +(mensualiteBase + coutAssuranceMensuelle).toFixed(2);
-    
-    // Coût total (mensualité totale * durée)
-    const ct = +(M * n).toFixed(2);
-    
-    // Coût du crédit (coût total - montant emprunté)
-    const cc = +(ct - val).toFixed(2);
-    
-    // Séparation des coûts pour l'affichage
-    const coutInteret = +((mensualiteBase * n) - val).toFixed(2);
-    const coutAssuranceTotal = +(coutAssuranceMensuelle * n).toFixed(2);
+      const r = tauxAnnuel / 100 / 12;
+      const mensualiteBase = val * r / (1 - Math.pow(1 + r, -n));
+      const coutAssuranceMensuelle = (val * assurance / 100) / 12;
+      const M = +(mensualiteBase + coutAssuranceMensuelle).toFixed(2);
+      const ct = +(M * n).toFixed(2);
+      const cc = +(ct - val).toFixed(2);
+      const coutInteret = +((mensualiteBase * n) - val).toFixed(2);
+      const coutAssuranceTotal = +(coutAssuranceMensuelle * n).toFixed(2);
 
-    afficherResultat({
-      success: true,
-      data: {
+      const resultData = {
         montant_emprunte: val,
         taux_interet: tauxAnnuel,
         taux_assurance: assurance,
@@ -241,39 +225,58 @@ require_once __DIR__ . '/../../../ws/config/config.php';
         cout_credit: cc,
         cout_interet: coutInteret,
         cout_assurance_total: coutAssuranceTotal,
-        tableau_amortissement: [] // à remplir si besoin
-      }
-    });
-  }
+        tableau_amortissement: []
+      };
+
+      // Affiche à l'écran
+      afficherResultat({
+        success: true,
+        data: resultData
+      });
+
+      // Sauvegarde via API
+      ajax("POST", "/simulation/save", {
+        montant: val,
+        taux: tauxAnnuel,
+        duree: n,
+        mensualite: M,
+        total: ct,
+        credit: cc
+      }, res => {
+        if (!res.success) {
+          alert("Erreur lors de l'enregistrement de la simulation.");
+        }
+      });
+    }
 
     /* ------------- Affichage résultat amélioré -------------- */
-function afficherResultat(res) {
-  const divRes = document.getElementById("resultat-simulation");
-  const divDet = document.getElementById("details-simulation");
-  if (res.success) {
-    const d = res.data;
-    divDet.innerHTML = `
-      <p><strong>Montant emprunté :</strong> ${d.montant_emprunte.toLocaleString()} €</p>
+    function afficherResultat(res) {
+      const divRes = document.getElementById("resultat-simulation");
+      const divDet = document.getElementById("details-simulation");
+      if (res.success) {
+        const d = res.data;
+        divDet.innerHTML = `
+      <p><strong>Montant emprunté :</strong> ${d.montant_emprunte.toLocaleString()} Ar</p>
       <p><strong>Taux annuel :</strong> ${d.taux_interet}%</p>
       <p><strong>Taux assurance :</strong> ${d.taux_assurance}%</p>
       <p><strong>Durée :</strong> ${d.duree} mois</p>
       <hr>
-      <p><strong>Mensualité base (capital + intérêts) :</strong> ${d.mensualite_base.toLocaleString()} €</p>
-      <p><strong>Assurance mensuelle :</strong> ${d.cout_assurance_mensuelle.toLocaleString()} €</p>
-      <p><strong>Mensualité totale :</strong> ${d.mensualite.toLocaleString()} €</p>
+      <p><strong>Mensualité base (capital + intérêts) :</strong> ${d.mensualite_base.toLocaleString()} Ar</p>
+      <p><strong>Assurance mensuelle :</strong> ${d.cout_assurance_mensuelle.toLocaleString()} Ar</p>
+      <p><strong>Mensualité totale :</strong> ${d.mensualite.toLocaleString()} Ar</p>
       <hr>
-      <p><strong>Coût total :</strong> ${d.cout_total.toLocaleString()} €</p>
-      <p><strong>Coût des intérêts :</strong> ${d.cout_interet.toLocaleString()} €</p>
-      <p><strong>Coût de l'assurance :</strong> ${d.cout_assurance_total.toLocaleString()} €</p>
-      <p><strong>Coût total du crédit :</strong> ${d.cout_credit.toLocaleString()} €</p>`;
-  } else {
-    divDet.innerHTML = `<div class="alert alert-danger">Erreur : ${res.message}</div>`;
-  }
-  divRes.style.display = "block";
-  divRes.scrollIntoView({
-    behavior: "smooth"
-  });
-}
+      <p><strong>Coût total :</strong> ${d.cout_total.toLocaleString()} Ar</p>
+      <p><strong>Coût des intérêts :</strong> ${d.cout_interet.toLocaleString()} Ar</p>
+      <p><strong>Coût de l'assurance :</strong> ${d.cout_assurance_total.toLocaleString()} Ar</p>
+      <p><strong>Coût total du crédit :</strong> ${d.cout_credit.toLocaleString()} Ar</p>`;
+      } else {
+        divDet.innerHTML = `<div class="alert alert-danger">Erreur : ${res.message}</div>`;
+      }
+      divRes.style.display = "block";
+      divRes.scrollIntoView({
+        behavior: "smooth"
+      });
+    }
 
     /* ------------- Init ---------------------------- */
     document.addEventListener("DOMContentLoaded", chargerTypesPret);
