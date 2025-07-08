@@ -9,48 +9,69 @@ class Remboursement {
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public static function generateRemboursements(int $pretId): float
+public static function generateRemboursements(int $pretId): float
 {
     $db = getDB();
 
     $sql = "
         SELECT p.valeur, p.duree, p.delai, p.dateDebut,
-               tp.taux
-        FROM   pret      p
-        JOIN   typePret  tp ON p.id_typePret = tp.id
+               p.assurance, tp.taux, tp.assurance AS taux_assurance
+        FROM   pret p
+        JOIN   typePret tp ON p.id_typePret = tp.id
         WHERE  p.id = ?
     ";
-    $row = $db->prepare($sql);
-    $row->execute([$pretId]);
-    $p = $row->fetch(PDO::FETCH_ASSOC);
-    if (!$p) {
-        throw new RuntimeException("Prêt $pretId introuvable");
-    }
-    $P = (float) $p['valeur'];              
-    $n = (int)   $p['duree'];               
-    $g = (int)   $p['delai'];               
-    $r = (float) $p['taux'] / 100 / 12;    
+    $stmt = $db->prepare($sql);
+    $stmt->execute([$pretId]);
+    $p = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+    if (!$p) throw new RuntimeException("Prêt $pretId introuvable");
+
+    $P = (float)$p['valeur'];           // capital emprunté
+    $n = (int)$p['duree'];              // durée en mois
+    $g = (int)$p['delai'];              // période de grâce
+    $r = (float)$p['taux'] / 100 / 12;  // taux mensuel
+    $assuranceMode = (int)$p['assurance'];
+    $tauxAssurance = (float)$p['taux_assurance'];
+
+    // Mensualité hors assurance
     $M = round($P * $r / (1 - pow(1 + $r, -$n)), 2);
-    $ins = $db->prepare(
-        "INSERT INTO remboursement
-               (id_pret, mensualite, valeur, dateRemboursement)
-         VALUES (?, ?, ?, ?)"
-    );
+
+    // Assurance répartie chaque mois
+    $assuranceMensuelle = 0;
+    if ($assuranceMode === 1 || $assuranceMode === 2) {
+        $assuranceTotal = $P * $tauxAssurance / 100;
+        $assuranceMensuelle = round($assuranceTotal / $n, 2);
+    }
+
+    $ins = $db->prepare("
+        INSERT INTO remboursement (id_pret, mensualite, valeur, dateRemboursement)
+        VALUES (?, ?, ?, ?)
+    ");
+
     $date = new DateTime($p['dateDebut']);
-    $date->modify("+{$g} months");         
-    $total = 0.0;                          
+    $date->modify("+{$g} months");
+
+    $total = 0;
+
     for ($i = 1; $i <= $n; $i++) {
+        $value = $M + $assuranceMensuelle;
+
         $ins->execute([
             $pretId,
             $i,
-            $M,
+            $value,
             $date->format('Y-m-d')
         ]);
-        $total += $M;                       
+
+        $total += $value;
         $date->modify('+1 month');
     }
-    return $total;                          
+
+    return round($total, 2);
 }
+
+
+
 
 
 }
