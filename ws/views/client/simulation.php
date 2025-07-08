@@ -70,7 +70,7 @@ require_once __DIR__ . '/../../../ws/config/config.php';
       <div class="container-xxl">
         <div class="row align-items-center min-vh-lg-100">
 
-          <h1>Simulation de prêt</h1>
+          <h1></h1>
 
           <div class="simulation-form">
             <div>
