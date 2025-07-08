@@ -62,8 +62,8 @@ if (isset($_SESSION['success'])) {
             <li class="nav-item ps-0 ps-xl-4 ms-2"><a class="nav-link fs-2 fw-medium" href="<?php echo BASE_URL; ?>/client">Home</a></li>
             <li class="nav-item ps-0 ps-xl-4 ms-2"><a class="nav-link fs-2 fw-medium" href="<?php echo BASE_URL; ?>/demande"">Faire demande de pret </a></li>
               <li class=" nav-item ps-0 ps-xl-4 ms-2"><a class="nav-link fs-2 fw-medium" href="<?php echo BASE_URL; ?>/MesPret">Mes pret</a></li>
-              <li class="nav-item ps-0 ps-xl-4 ms-2"><a class="nav-link fs-2 fw-medium" href="<?php echo BASE_URL; ?>/simulation">Simulation</a></li>
-              <li class="nav-item ps-0 ps-xl-4 ms-2"><a class="nav-link fs-2 fw-medium" href="<?php echo BASE_URL; ?>/login">Logout</a></li>
+            <li class="nav-item ps-0 ps-xl-4 ms-2"><a class="nav-link fs-2 fw-medium" href="<?php echo BASE_URL; ?>/simulation">Simulation</a></li>
+            <li class="nav-item ps-0 ps-xl-4 ms-2"><a class="nav-link fs-2 fw-medium" href="<?php echo BASE_URL; ?>/login">Logout</a></li>
           </ul>
         </div>
       </div>
@@ -74,14 +74,16 @@ if (isset($_SESSION['success'])) {
     <!-- <section> begin ============================-->
     <section class="pt-8 py-lg-0" id="hero">
 
+      <div class="row align-items-center min-vh-lg-50">
+      </div>
       <div class="container-xxl">
         <div class="row align-items-center min-vh-lg-100">
-          <h1></h1>
+
           <?php if ($user): ?>
             <p>Bienvenue, <strong><?= htmlspecialchars($user['prenom']) ?> <?= htmlspecialchars($user['nom']) ?></strong> (ID: <?= $user['id'] ?>)</p>
           <?php else: ?>
             <p>Utilisateur non connecté. <a href="<?= BASE_URL ?>/login">Se connecter</a></p>
-            <?php exit(); // Bloque l'accès si pas connecté 
+            <?php exit();
             ?>
           <?php endif; ?>
 
