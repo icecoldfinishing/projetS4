@@ -1,9 +1,22 @@
 <?php
-require_once __DIR__ . '/../../../ws/db.php';
+require_once __DIR__ . '/../db.php';
 
 class Simulation {
+    public static function getAllByUserId($userId) {
+        $db = getDB();
+        $stmt = $db->prepare("SELECT * FROM simulation WHERE id_user = ?");
+        $stmt->execute([$userId]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 
-    public static function save($data) {
+    public static function getById($id) {
+        $db = getDB();
+        $stmt = $db->prepare("SELECT * FROM simulation WHERE id = ?");
+        $stmt->execute([$id]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public static function create($data) {
         $db = getDB();
         $stmt = $db->prepare("
             INSERT INTO simulation (
@@ -12,7 +25,6 @@ class Simulation {
                 cout_total, cout_interet, cout_assurance_total, cout_credit
             ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         ");
-
         $stmt->execute([
             $data->id_user,
             $data->montant,
@@ -27,20 +39,6 @@ class Simulation {
             $data->cout_assurance_total,
             $data->cout_credit
         ]);
-
         return $db->lastInsertId();
-    }
-
-
-    // Récupère les simulations, éventuellement filtrées par utilisateur
-    public static function getByUserId($userId = null) {
-        $db = getDB();
-        if ($userId) {
-            $stmt = $db->prepare("SELECT * FROM simulation WHERE id_user = ? ORDER BY id DESC");
-            $stmt->execute([$userId]);
-        } else {
-            $stmt = $db->query("SELECT * FROM simulation ORDER BY id DESC");
-        }
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 }
